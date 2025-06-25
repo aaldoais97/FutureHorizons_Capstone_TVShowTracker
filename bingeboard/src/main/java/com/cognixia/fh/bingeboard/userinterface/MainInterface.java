@@ -1,10 +1,18 @@
 package com.cognixia.fh.bingeboard.userinterface;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class MainInterface {
     // This class will serve as the main interface for the BingeBoard application.
     // It will handle user interactions, display menus, and manage navigation between different features of the application.
 
-    public static void displayMainMenu() {
+
+
+    public static void displayMainMenu(Scanner inputScanner) {
+        int choice = -1; // Variable to store the user's menu choice
+        boolean validOption = false;
+
         System.out.println("Welcome to BingeBoard!");
         System.out.println("Please select an option from the menu below:");
         System.out.println("Enter the number and press 'enter' to select an option.");
@@ -14,7 +22,63 @@ public class MainInterface {
         System.out.println("3. Remove from My Watch List");
         System.out.println("4. Search for Content");
         System.out.println("5. Sign out");
-        System.out.println("6. Exit BingeBoard\n");    // Extra new line for better readability
+        System.out.println("6. Exit BingeBoard"); 
+        System.out.println("===================================\n");    // Extra new line for better readability
+
+        // Loop to handle user input and menu selection
+        // This loop will continue until the user selects a valid option.
+        while(!validOption) {
+            System.out.println("Please enter your choice:");
+            
+
+            try {
+                choice = inputScanner.nextInt(); // Read the user's choice
+                inputScanner.nextLine(); // Consume any leftover newline character
+
+                switch (choice) {
+                    case 1:
+                        viewWatchList();
+                        validOption = true;
+                        break;
+                    case 2:
+                        updateWatchList();
+                        validOption = true;
+                        break;
+                    case 3:
+                        removeFromWatchList();
+                        validOption = true;
+                        break;
+                    case 4:
+                        searchContent();
+                        validOption = true;
+                        break;
+                    case 5:
+                        signOut();
+                        validOption = true;
+                        break;
+                    case 6:
+                        exitBingeBoard();
+                        validOption = true;
+                        break;
+                    default:
+                        System.out.println("Invalid option. Please select from the options above.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number corresponding to the menu options."); 
+                // Clear the scanner buffer
+                if (inputScanner.hasNextLine()) {
+                    inputScanner.nextLine(); // Consume the newline character left by nextInt()
+                }
+            } catch (Exception e) {
+                System.out.println("An error occurred: " + e.getMessage());
+                System.out.println("Please enter a valid option.");
+                e.printStackTrace(); // Print the stack trace for debugging purposes
+                // Clear the scanner buffer
+                if (inputScanner.hasNextLine()) {
+                    inputScanner.nextLine(); // Consume the newline character left by nextInt()
+                }
+            }
+        }
     }
 
     // Other methods for handling user input and navigating through the application can be added here.

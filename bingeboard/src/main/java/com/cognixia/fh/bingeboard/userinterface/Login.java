@@ -6,8 +6,7 @@ public class Login {
     private static String username;
     private static String password;
 
-    public static void homePage() {
-        Scanner loginScanner = new Scanner(System.in);
+    public static void signinPage(Scanner inputScanner) {
         boolean validLogin = false;
 
         System.out.println("Welcome to the BingeBoard!");
@@ -17,11 +16,11 @@ public class Login {
         while (!validLogin) {
             // Get username
             System.out.println("Please enter your username and press 'enter':");
-            username = loginScanner.nextLine(); // No need for try-catch here
+            username = inputScanner.nextLine(); // No need for try-catch here
 
             // Get password
             System.out.println("Please enter your password and press 'enter':");
-            password = loginScanner.nextLine();
+            password = inputScanner.nextLine();
 
             // Check if login combination matches existing user
             // INSERT CODE HERE TO CHECK SQL DB
