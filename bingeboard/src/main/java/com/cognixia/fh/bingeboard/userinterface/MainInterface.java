@@ -14,20 +14,21 @@ public class MainInterface {
         boolean exit = false; // Flag to control the exit condition
 
         System.out.println("Welcome to BingeBoard!");
-        System.out.println("Please select an option from the menu below:");
-        System.out.println("Enter the number and press 'enter' to select an option.");
-        System.out.println("===================================");
-        System.out.println("1. View My Watch List");
-        System.out.println("2. Update My Watch List");
-        System.out.println("3. Remove from My Watch List");
-        System.out.println("4. Search for Content");
-        System.out.println("5. Sign out");
-        System.out.println("6. Exit BingeBoard"); 
-        System.out.println("===================================\n");    // Extra new line for better readability
 
         // Loop to handle user input and menu selection
         // This loop will continue until the user selects a valid option.
         while(!exit) {
+            System.out.println("Please select an option from the menu below:");
+            System.out.println("Enter the number and press 'enter' to select an option.");
+            System.out.println("===================================");
+            System.out.println("1. View My Watch List");
+            System.out.println("2. Update My Watch List");
+            System.out.println("3. Remove from My Watch List");
+            System.out.println("4. Search for Content");
+            System.out.println("5. Sign out");
+            System.out.println("6. Exit BingeBoard"); 
+            System.out.println("===================================\n");    // Extra new line for better readability
+
             System.out.println("Please enter your choice:");
             
 
@@ -37,16 +38,16 @@ public class MainInterface {
 
                 switch (choice) {
                     case 1:
-                        viewWatchList();
+                        viewWatchList(inputScanner);
                         break;
                     case 2:
-                        updateWatchList();
+                        updateWatchList(inputScanner);
                         break;
                     case 3:
-                        removeFromWatchList();
+                        removeFromWatchList(inputScanner);
                         break;
                     case 4:
-                        searchContent();
+                        searchContent(inputScanner);
                         break;
                     case 5:
                         signOut();
@@ -66,7 +67,6 @@ public class MainInterface {
                 }
             } catch (Exception e) {
                 System.out.println("An error occurred: " + e.getMessage());
-                System.out.println("Please enter a valid option.");
                 e.printStackTrace(); // Print the stack trace for debugging purposes
                 // Clear the scanner buffer
                 if (inputScanner.hasNextLine()) {
@@ -77,28 +77,26 @@ public class MainInterface {
     }
 
     // Other methods for handling user input and navigating through the application can be added here.
-    private static void viewWatchList() {
-        // Code to view the user's watch list
-        System.out.println("Viewing your watch list...");
-        // Implement logic to retrieve and display the watch list from the database
-        
+    private static void viewWatchList(Scanner inputScanner) {
+        // Display the user's watch list and corresponding menu
+        WatchList.displayWatchList(inputScanner);
     }
 
-    private static void updateWatchList() {
+    private static void updateWatchList(Scanner inputScanner) {
         // Code to update the user's watch list
         System.out.println("Updating your watch list...");
         // Implement logic to add or modify items in the watch list
         
     }
 
-    private static void removeFromWatchList() {
+    private static void removeFromWatchList(Scanner inputScanner) {
         // Code to remove an item from the user's watch list
         System.out.println("Removing an item from your watch list...");
         // Implement logic to remove an item from the watch list
         
     }
 
-    private static void searchContent() {
+    private static void searchContent(Scanner inputScanner) {
         // Code to search for content
         System.out.println("Searching for content...");
         // Implement logic to search for content in the database
