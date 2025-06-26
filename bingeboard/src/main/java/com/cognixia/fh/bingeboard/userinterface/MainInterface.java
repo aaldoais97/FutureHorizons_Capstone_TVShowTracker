@@ -10,8 +10,8 @@ public class MainInterface {
 
 
     public static void displayMainMenu(Scanner inputScanner) {
-        int choice = -1; // Variable to store the user's menu choice
-        boolean validOption = false;
+        int choice; // Variable to store the user's menu choice\
+        boolean exit = false; // Flag to control the exit condition
 
         System.out.println("Welcome to BingeBoard!");
         System.out.println("Please select an option from the menu below:");
@@ -27,7 +27,7 @@ public class MainInterface {
 
         // Loop to handle user input and menu selection
         // This loop will continue until the user selects a valid option.
-        while(!validOption) {
+        while(!exit) {
             System.out.println("Please enter your choice:");
             
 
@@ -38,27 +38,22 @@ public class MainInterface {
                 switch (choice) {
                     case 1:
                         viewWatchList();
-                        validOption = true;
                         break;
                     case 2:
                         updateWatchList();
-                        validOption = true;
                         break;
                     case 3:
                         removeFromWatchList();
-                        validOption = true;
                         break;
                     case 4:
                         searchContent();
-                        validOption = true;
                         break;
                     case 5:
                         signOut();
-                        validOption = true;
                         break;
                     case 6:
                         exitBingeBoard();
-                        validOption = true;
+                        exit = true; // Set exit flag to true to break the loop
                         break;
                     default:
                         System.out.println("Invalid option. Please select from the options above.");
@@ -118,7 +113,7 @@ public class MainInterface {
     }
 
     private static void exitBingeBoard() {
-        // Code to exit the application
+        // Print exit message
         System.out.println("Exiting BingeBoard. Thank you for using our service!");
         // Implement logic to clean up resources and exit the application
         
