@@ -2,6 +2,11 @@ drop database if exists bingeboard_db;
 create database bingeboard_db;
 use bingeboard_db;
 
+/*
+	This script creates the BingeBoard database and all tables
+    (WARNING: THIS DELETES AND REPLACES THE DATABASE WITH AN EMPTY ONE)
+*/
+
 create table users (
 	id int primary key auto_increment,
     username varchar(255) unique,
@@ -10,6 +15,7 @@ create table users (
 	last_name varchar(255)
 );
 
+-- Each user must have one progress list and each list must have one user
 create table progress_lists (
 	id int primary key,
     seasons_completed int,
@@ -33,11 +39,13 @@ create table directors(
     name varchar(255)
 );
 
+-- TV Networks must have unique names due to copyright
 create table networks(
 	id int primary key auto_increment,
     name varchar(255) unique
 );
 
+-- Genres are unique to ensure proper data groupings
 create table genres(
 	id int primary key auto_increment,
     name varchar(255) unique
