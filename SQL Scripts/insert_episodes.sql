@@ -1,3 +1,4 @@
+-- This script will not run yet. Needs seasons table to be populated.
 INSERT INTO episodes (id, name, summary, season_id) VALUES
 (1, 'BCS S1E01', 'Conflicts reach a peak', 1),
 (2, 'BCS S1E02', 'Conflicts reach a peak', 1),
