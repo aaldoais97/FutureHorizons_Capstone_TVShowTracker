@@ -84,7 +84,7 @@ public class MainInterface {
 
     private static void updateWatchList(Scanner inputScanner) {
         // Code to update the user's watch list
-        System.out.println("Updating your watch list...");
+        UpdateWatchList.displayMenu(inputScanner);
         // Implement logic to add or modify items in the watch list
         
     }

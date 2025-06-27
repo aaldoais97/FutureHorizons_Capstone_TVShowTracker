@@ -4,6 +4,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class WatchList {
+    // This method displays the user's watch list, in order by progress
+    // This will also call to display filtering options for the watch list
     static void displayWatchList(Scanner inputScanner) {
         // This method will display the user's watch list.
         int choice;
