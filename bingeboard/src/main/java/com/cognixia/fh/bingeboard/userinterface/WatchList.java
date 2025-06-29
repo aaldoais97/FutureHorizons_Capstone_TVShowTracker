@@ -16,6 +16,7 @@ public class WatchList {
         // Implement logic to retrieve and display the watch list from the database
 
         System.out.println("Filter options:");
+        System.out.println("===================================");
         System.out.println("1. By Progress");
         System.out.println("2. By Director");
         System.out.println("3. By Writer");
@@ -23,6 +24,7 @@ public class WatchList {
         System.out.println("5. By Genre");
         System.out.println("6. By TV Network");
         System.out.println("7. Back to Main Menu");
+        System.out.println("===================================\n");
         
         while(true) {
             System.out.println("Please enter your choice:");
