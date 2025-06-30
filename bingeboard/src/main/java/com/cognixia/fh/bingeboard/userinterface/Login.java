@@ -34,4 +34,28 @@ public class Login {
             }
         }
     }
+
+    public static String getUsername() {
+        return username; // Return the username for further use
+    }
+
+    public static String getPassword() {
+        return password; // Return the password for further use
+    }
+
+    public static void clearCredentials() {
+        username = null; // Clear the username
+        password = null; // Clear the password
+    }
+
+    public static void signOut(Scanner inputScanner) {
+        clearCredentials(); // Clear the stored login credentials
+
+        // Display sign-out message and 2 new lines for better readability
+        System.out.println("You have successfully signed out. Thank you for using BingeBoard!");
+        System.out.println();
+        System.out.println();
+        
+        signinPage(inputScanner);   // Return to the sign-in page
+    }
 }

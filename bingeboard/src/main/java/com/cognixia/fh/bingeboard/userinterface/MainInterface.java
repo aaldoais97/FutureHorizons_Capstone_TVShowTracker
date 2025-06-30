@@ -24,7 +24,7 @@ public class MainInterface {
             System.out.println("1. View My Watch List");
             System.out.println("2. Update My Watch List");
             System.out.println("3. Remove from My Watch List");
-            System.out.println("4. Search for Content");
+            System.out.println("4. View TV Show Catalog");
             System.out.println("5. Sign out");
             System.out.println("6. Exit BingeBoard"); 
             System.out.println("===================================\n");    // Extra new line for better readability
@@ -47,13 +47,13 @@ public class MainInterface {
                         removeFromWatchList(inputScanner);
                         break;
                     case 4:
-                        searchContent(inputScanner);
+                        vewCatalog(inputScanner);
                         break;
                     case 5:
-                        signOut();
+                        signOut(inputScanner);
                         break;
                     case 6:
-                        exitBingeBoard();
+                        exitBingeBoard(inputScanner);
                         exit = true; // Set exit flag to true to break the loop
                         break;
                     default:
@@ -91,29 +91,30 @@ public class MainInterface {
 
     private static void removeFromWatchList(Scanner inputScanner) {
         // Code to remove an item from the user's watch list
-        System.out.println("Removing an item from your watch list...");
+        RemoveFromWatchList.displayMenu(inputScanner);
         // Implement logic to remove an item from the watch list
         
     }
 
-    private static void searchContent(Scanner inputScanner) {
-        // Code to search for content
-        System.out.println("Searching for content...");
+    private static void vewCatalog(Scanner inputScanner) {
+        // Code to view catalog of TV shows
+        Catalog.displayMenu(inputScanner);
         // Implement logic to search for content in the database
         
     }
 
-    private static void signOut() {
+    private static void signOut(Scanner inputScanner) {
         // Code to sign out the user
         System.out.println("Signing out...");
-        // Implement logic to handle user sign-out
-        
+
+        Login.signOut(inputScanner);
     }
 
-    private static void exitBingeBoard() {
+    private static void exitBingeBoard(Scanner inputScanner) {
         // Print exit message
         System.out.println("Exiting BingeBoard. Thank you for using our service!");
-        // Implement logic to clean up resources and exit the application
-        
+
+        inputScanner.close(); // Close the scanner to prevent resource leaks
+        Login.clearCredentials(); // Clear the stored login credentials
     }
 }
