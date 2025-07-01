@@ -3,9 +3,9 @@ package com.cognixia.fh.bingeboard.userinterface;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+// This method will display the menu for the user to filter shows.
 public class Catalog {
     static void displayMenu(Scanner inputScanner) {
-        // This method will display the menu for the user to filter shows.
         int choice;
 
         System.out.println("Viewing the catalog of shows...");

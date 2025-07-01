@@ -3,12 +3,10 @@ package com.cognixia.fh.bingeboard.userinterface;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+// This class will serve as the main interface for the BingeBoard application.
+// It will handle user interactions, display menus, and manage navigation between different features of the application.
 public class MainInterface {
-    // This class will serve as the main interface for the BingeBoard application.
-    // It will handle user interactions, display menus, and manage navigation between different features of the application.
-
-
-
+    // This method displays the main menu and handles user input for navigating through the application.
     public static void displayMainMenu(Scanner inputScanner) {
         int choice; // Variable to store the user's menu choice\
         boolean exit = false; // Flag to control the exit condition
@@ -79,7 +77,7 @@ public class MainInterface {
     // Other methods for handling user input and navigating through the application can be added here.
     private static void viewWatchList(Scanner inputScanner) {
         // Display the user's watch list and corresponding menu
-        WatchList.displayWatchList(inputScanner);
+        WatchList.displayMenu(inputScanner);
     }
 
     private static void updateWatchList(Scanner inputScanner) {

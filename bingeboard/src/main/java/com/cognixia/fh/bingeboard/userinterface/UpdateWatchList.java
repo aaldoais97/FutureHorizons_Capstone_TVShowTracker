@@ -4,7 +4,14 @@ import java.util.Scanner;
 
 import com.cognixia.fh.bingeboard.exceptions.ShowNotFoundException;
 
+/**
+ * This class provides a user interface for updating the episodes watched in the watch list.
+ * It prompts the user to enter the name of a show and the number of episodes watched.
+ * If the show is not found, it throws a ShowNotFoundException.
+ */
 public class UpdateWatchList {
+    // This method displays the menu for updating the watch list.
+    // It prompts the user for the name of the show and the number of episodes watched.
     static void displayMenu(Scanner inputScanner) {
         String showName; // Variable to store user's choice
         int episodesWatched; // Variable to store the number of episodes watched

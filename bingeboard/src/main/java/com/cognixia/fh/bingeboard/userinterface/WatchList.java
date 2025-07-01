@@ -3,10 +3,12 @@ package com.cognixia.fh.bingeboard.userinterface;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.cognixia.fh.bingeboard.FilterOptions;
+
+// This method displays the user's watch list, in order by progress
 public class WatchList {
-    // This method displays the user's watch list, in order by progress
     // This will also call to display filtering options for the watch list
-    static void displayWatchList(Scanner inputScanner) {
+    static void displayMenu(Scanner inputScanner) {
         // This method will display the user's watch list.
         int choice;
 
@@ -36,27 +38,27 @@ public class WatchList {
                 switch (choice) {
                     case 1:
                         System.out.println("Filtering by Progress...");
-                        // Implement logic to filter watch list by progress
+                        displayWatchList(inputScanner, FilterOptions.BY_PROGRESS);
                         break;
                     case 2:
                         System.out.println("Filtering by Director...");
-                        // Implement logic to filter watch list by director
+                        displayWatchList(inputScanner,  FilterOptions.BY_DIRECTOR);
                         break;
                     case 3:
                         System.out.println("Filtering by Writer...");
-                        // Implement logic to filter watch list by writer
+                        displayWatchList(inputScanner, FilterOptions.BY_WRITER);
                         break;
                     case 4:
                         System.out.println("Filtering by Actor...");
-                        // Implement logic to filter watch list by actor
+                        displayWatchList(inputScanner,  FilterOptions.BY_ACTOR);
                         break;
                     case 5:
                         System.out.println("Filtering by Genre...");
-                        // Implement logic to filter watch list by genre
+                        displayWatchList(inputScanner, FilterOptions.BY_GENRE);
                         break;
                     case 6:
                         System.out.println("Filtering by TV Network...");
-                        // Implement logic to filter watch list by TV network
+                        displayWatchList(inputScanner,  FilterOptions.BY_TV_NETWORK);
                         break;
                     case 7:
                         System.out.println("Returning to the main menu...");
@@ -74,6 +76,67 @@ public class WatchList {
                 System.out.println("An error occurred while viewing your watch list: " + e.getMessage());
                 e.printStackTrace(); // Print the stack trace for debugging purposes
             }
+        }
+    }
+
+    // This method will view the user's watch list based on the selected filter option
+    static void displayWatchList(Scanner inputScanner, FilterOptions filterOption) {
+        System.out.println("Viewing your watch list with filter: " + filterOption);
+
+        // Prompt the user to enter the filter criteria
+        switch (filterOption) {
+            case BY_PROGRESS:
+                System.out.println("Please choose between the following options:");
+                System.out.println("1. In Progress");
+                System.out.println("2. Not Started");
+                System.out.println("3. Finished");
+                
+                try {
+                    int choice = inputScanner.nextInt();
+                    inputScanner.nextLine(); // Consume any leftover newline character
+                    switch (choice) {
+                        case 1:
+                            // Show in progress shows
+                            break;
+                        case 2:
+                            // Show not started shows
+                            break;
+                        case 3:
+                            // Show finished shows
+                            break;
+                        default:
+                            System.out.println("Invalid option. Please select from the options above.");
+                    }
+                } catch (Exception e) {
+                }
+                break;
+            case BY_DIRECTOR:
+                System.out.println("Please enter the director's name:");
+                String director = inputScanner.nextLine();
+                // Show shows by the specified director
+                break;
+            case BY_WRITER:
+                System.out.println("Please enter the writer's name:");
+                String writer = inputScanner.nextLine();
+                // Show shows by the specified writer
+                break;
+            case BY_ACTOR:
+                System.out.println("Please enter the actor's name:");
+                String actor = inputScanner.nextLine();
+                // Show shows by the specified actor
+                break;
+            case BY_GENRE:
+                System.out.println("Please enter the genre:");
+                String genre = inputScanner.nextLine();
+                // Show shows by the specified genre
+                break;
+            case BY_TV_NETWORK:
+                System.out.println("Please enter the TV network:");
+                String tvNetwork = inputScanner.nextLine();
+                // Show shows by the specified TV network
+                break;
+            default:
+                System.out.println("Invalid filter option.");
         }
     }
 }
