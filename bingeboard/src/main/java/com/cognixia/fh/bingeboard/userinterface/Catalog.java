@@ -3,6 +3,8 @@ package com.cognixia.fh.bingeboard.userinterface;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.cognixia.fh.bingeboard.FilterOptions;
+
 // This method will display the menu for the user to filter shows.
 public class Catalog {
     static void displayMenu(Scanner inputScanner) {
@@ -71,6 +73,44 @@ public class Catalog {
                 System.out.println("An error occurred while viewing catalog: " + e.getMessage());
                 e.printStackTrace(); // Print the stack trace for debugging purposes
             }
+        }
+    }
+
+    static void viewCatalog(Scanner inputScanner, FilterOptions filterOption) {
+        System.out.println("Viewing the catalog with filter: " + filterOption);
+        
+        switch(filterOption) {
+            case VIEW_ALL:
+                System.out.println("Viewing all shows in the catalog...");
+                // Implement logic to view all shows in the catalog
+                break;
+            case BY_DIRECTOR:
+                System.out.println("Please enter the director's name:");
+                String director = inputScanner.nextLine();
+                // Implement logic to filter catalog by director
+                break;
+            case BY_WRITER:
+                System.out.println("Please enter the writer's name:");
+                String writer = inputScanner.nextLine();
+                // Implement logic to filter catalog by writer
+                break;
+            case BY_ACTOR:
+                System.out.println("Please enter the actor's name:");
+                String actor = inputScanner.nextLine();
+                // Implement logic to filter catalog by actor
+                break;
+            case BY_GENRE:
+                System.out.println("Please enter the genre:");
+                String genre = inputScanner.nextLine();
+                // Implement logic to filter catalog by genre
+                break;
+            case BY_TV_NETWORK:
+                System.out.println("Please enter the TV network:");
+                String tvNetwork = inputScanner.nextLine();
+                // Implement logic to filter catalog by TV network
+                break;
+            default:
+                System.out.println("Invalid filter option.");
         }
     }
 }
