@@ -22,7 +22,7 @@ public class BingeBoardRunner
         // Attempt to establish a connection to the database
         try {
             Connection connection = ConnectionManager.getConnection(); // Establish a connection to the database
-            System.out.println("Database connection established successfully.");
+            // No need to print connection status, as the connection is established if the program starts
         } catch(SQLException e) {
             System.out.println("Database connection failed: " + e.getMessage());
             return; // Exit if the connection fails
@@ -37,7 +37,7 @@ public class BingeBoardRunner
             return; // Exit if there's an unexpected error
         }
 
-        Login.signinPage(inputScanner); // Start the login process
+        Login.startPage(inputScanner); // Start the login process
         MainInterface.displayMainMenu(inputScanner); // Display the main menu after successful login
 
         inputScanner.close(); // Close the scanner to prevent resource leaks

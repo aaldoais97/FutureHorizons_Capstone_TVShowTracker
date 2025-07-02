@@ -1,6 +1,6 @@
 package com.cognixia.fh.bingeboard.dao;
 
-public class UsersModel implements UsersIntrfc {
+public class Users implements UsersIntrfc {
     int id;
     String username;
     String password;
@@ -8,7 +8,7 @@ public class UsersModel implements UsersIntrfc {
     String lastName;
 
     // Constructor for when user is created with all information
-    public UsersModel(String firstName, int id, String lastName, String password, String username) {
+    public Users(String firstName, int id, String lastName, String password, String username) {
         this.firstName = firstName;
         this.id = id;
         this.lastName = lastName;
@@ -17,7 +17,7 @@ public class UsersModel implements UsersIntrfc {
     }
 
     // This much information is needed to create a user
-    public UsersModel(int id, String password, String username) {
+    public Users(int id, String password, String username) {
         this.id = id;
         this.password = password;
         this.username = username;
@@ -25,6 +25,10 @@ public class UsersModel implements UsersIntrfc {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -51,4 +55,6 @@ public class UsersModel implements UsersIntrfc {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public boolean usernameExists(){return true;}
 }

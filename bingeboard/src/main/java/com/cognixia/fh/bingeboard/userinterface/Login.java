@@ -1,5 +1,6 @@
 package com.cognixia.fh.bingeboard.userinterface;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Login {
@@ -8,10 +9,6 @@ public class Login {
 
     public static void signinPage(Scanner inputScanner) {
         boolean validLogin = false;
-
-        System.out.println("Welcome to the BingeBoard!");
-        System.out.println("Your entertainment tracking hub for all things binge-worthy!");
-        System.out.println("Please log in or sign up by entering a username and password.");
         
         while (!validLogin) {
             // Get username
@@ -25,12 +22,84 @@ public class Login {
             // Check if login combination matches existing user
             // INSERT CODE HERE TO CHECK SQL DB
 
+
             // Validate password with a length and regex to check for at least 6 characters, 1 digit, and 1 symbol
             if (password.length() > 6 && password.matches("(?=.*\\d)(?=.*[^a-zA-Z0-9]).+")) {
                 validLogin = true; // Valid login, exit loop
-                System.out.println("Login successful! Welcome, " + username + "!");
+                System.out.println("\nLogin successful! Welcome, " + username + "!\n");
             } else {
-                System.out.println("Password must be at least 6 characters long and contain at least 1 digit and 1 symbol.");
+                System.out.println("Password must be at least 6 characters long and contain at least 1 digit and 1 symbol.\n");
+            }
+        }
+    }
+
+    public static void signupPage(Scanner inputScanner) {
+        // Get username
+        System.out.println("Please enter a username:");
+        username = inputScanner.nextLine();
+
+        if(username.isEmpty()) {
+            System.out.println("Username cannot be empty. Please try again.\n");
+            signupPage(inputScanner); // Retry sign-up if username is empty
+        }
+
+        // Keep looping until a valid password is entered and confirmed
+        while(true) {
+            // Get password
+            System.out.println("Please enter a password:");
+            password = inputScanner.nextLine();
+
+            System.err.println("Please confirm your password:");
+            String confirmPassword = inputScanner.nextLine();
+
+            // Check if passwords match
+            if (!password.equals(confirmPassword)) {
+                System.out.println("Passwords do not match. Please try again.\n");
+                continue; // Retry password input if they don't match
+            }
+
+            // Validate password with a length and regex to check for at least 6 characters, 1 digit, and 1 symbol
+            if (password.length() > 6 && password.matches("(?=.*\\d)(?=.*[^a-zA-Z0-9]).+")) {
+                // INSERT CODE HERE TO ADD USER TO SQL DB
+                System.out.println("\nSign up successful! Welcome, " + username + "!\n");
+                break; // Exit loop if sign-up is successful
+            } else {
+                System.out.println("Password must be at least 6 characters long and contain at least 1 digit and 1 symbol.\n");
+                continue; // Retry password input if validation fails
+            }
+        }
+    }
+
+    public static void startPage(Scanner inputScanner) {
+        // Display start page message
+        System.out.println("Welcome to the BingeBoard!");
+        System.out.println("Your entertainment tracking hub for all things binge-worthy!\n");
+        
+        while (true) { 
+            System.out.println("1. Sign In");
+            System.out.println("2. Sign Up");
+
+            try {
+                int choice = inputScanner.nextInt(); // Read user's choice
+                inputScanner.nextLine(); // Consume the newline character
+
+                switch (choice) {
+                    case 1:
+                        signinPage(inputScanner);
+                        return; // Exit the loop after successful sign-in
+                    case 2:
+                        signupPage(inputScanner);
+                        return; // Exit the loop after successful sign-up
+                    default:
+                        System.out.println("Invalid choice. Please try again.\n");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number corresponding to the options above.\n");
+                inputScanner.nextLine(); // Clear the scanner buffer
+            } catch (Exception e) {
+                System.out.println("An error occurred: " + e.getMessage());
+                e.printStackTrace(); // Print the stack trace for debugging purposes
+                inputScanner.nextLine(); // Clear the scanner buffer
             }
         }
     }
@@ -56,6 +125,6 @@ public class Login {
         System.out.println();
         System.out.println();
         
-        signinPage(inputScanner);   // Return to the sign-in page
+        startPage(inputScanner);   // Return to the sign-in page
     }
 }

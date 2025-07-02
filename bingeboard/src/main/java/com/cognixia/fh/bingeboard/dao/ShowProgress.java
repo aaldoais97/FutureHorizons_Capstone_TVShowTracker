@@ -1,6 +1,6 @@
 package com.cognixia.fh.bingeboard.dao;
 
-public class ShowProgressModel {
+public class ShowProgress {
     int userId;
     int showId;
     int episodesCompleted;

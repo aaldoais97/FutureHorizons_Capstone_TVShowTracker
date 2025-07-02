@@ -1,7 +1,9 @@
 package com.cognixia.fh.bingeboard.dao;
 
 public interface UsersIntrfc {
-    public int getId(); // User ID will not be changed after creation
+    public int getId();
+
+    public void setId(int id);
 
     public String getUsername();
     

@@ -1,6 +1,6 @@
 package com.cognixia.fh.bingeboard.dao;
 
-public class ShowsModel {
+public class Shows {
     int id;
     String name;
     // ArrayList<Genre> genres;

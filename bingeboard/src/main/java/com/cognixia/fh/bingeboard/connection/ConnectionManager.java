@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 //Utility singleton class that will establish DB connection.
-//Singleton - a class that only allows one object to be created from it.
 public class ConnectionManager {
 
     private static Connection connection;
