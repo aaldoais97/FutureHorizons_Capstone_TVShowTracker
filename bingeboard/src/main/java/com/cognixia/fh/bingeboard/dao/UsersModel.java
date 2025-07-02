@@ -1,6 +1,6 @@
 package com.cognixia.fh.bingeboard.dao;
 
-public class UsersModel {
+public class UsersModel implements UsersIntrfc {
     int id;
     String username;
     String password;
@@ -26,9 +26,7 @@ public class UsersModel {
     public int getId() {
         return id;
     }
-    public void setId(int id) {
-        this.id = id;
-    }
+
     public String getUsername() {
         return username;
     }
