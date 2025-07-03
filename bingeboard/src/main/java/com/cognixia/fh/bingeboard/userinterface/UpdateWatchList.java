@@ -1,5 +1,6 @@
 package com.cognixia.fh.bingeboard.userinterface;
 
+import java.sql.Connection;
 import java.util.Scanner;
 
 import com.cognixia.fh.bingeboard.exceptions.ShowNotFoundException;
@@ -12,7 +13,7 @@ import com.cognixia.fh.bingeboard.exceptions.ShowNotFoundException;
 public class UpdateWatchList {
     // This method displays the menu for updating the watch list.
     // It prompts the user for the name of the show and the number of episodes watched.
-    static void displayMenu(Scanner inputScanner) {
+    static void displayMenu(Scanner inputScanner, Connection connection) {
         String showName; // Variable to store user's choice
         int episodesWatched; // Variable to store the number of episodes watched
 

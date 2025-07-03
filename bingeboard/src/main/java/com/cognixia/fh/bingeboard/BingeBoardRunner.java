@@ -18,10 +18,11 @@ public class BingeBoardRunner
     public static void main( String[] args )
     {
         Scanner inputScanner = new Scanner(System.in);
+        Connection connection = null; // Initialize the connection variable
 
         // Attempt to establish a connection to the database
         try {
-            Connection connection = ConnectionManager.getConnection(); // Establish a connection to the database
+            connection = ConnectionManager.getConnection(); // Establish a connection to the database
             // No need to print connection status, as the connection is established if the program starts
         } catch(SQLException e) {
             System.out.println("Database connection failed: " + e.getMessage());
@@ -37,9 +38,13 @@ public class BingeBoardRunner
             return; // Exit if there's an unexpected error
         }
 
-        Login.startPage(inputScanner); // Start the login process
-        MainInterface.displayMainMenu(inputScanner); // Display the main menu after successful login
+        // This code will not be reached if the connection fails, but just to be safe, check for null
+        if (connection != null) {
+            Login.startPage(inputScanner, connection); // Start the login process
+            MainInterface.displayMainMenu(inputScanner, connection); // Display the main menu after successful login
+        }
 
         inputScanner.close(); // Close the scanner to prevent resource leaks
+        connection = null; // Clear the connection variable to allow garbage collection
     }
 }

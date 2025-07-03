@@ -23,38 +23,29 @@ public class Users implements UsersIntrfc {
         this.username = username;
     }
 
+    // Getters (no need for setters since user information does not change after instantiation)
+    @Override
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    @Override
     public String getUsername() {
         return username;
     }
-    public void setUsername(String username) {
-        this.username = username;
-    }
+
+    @Override
     public String getPassword() {
         return password;
     }
-    public void setPassword(String password) {
-        this.password = password;
-    }
+
+    @Override
     public String getFirstName() {
         return firstName;
     }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+
+    @Override
     public String getLastName() {
         return lastName;
     }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public boolean usernameExists(){return true;}
 }

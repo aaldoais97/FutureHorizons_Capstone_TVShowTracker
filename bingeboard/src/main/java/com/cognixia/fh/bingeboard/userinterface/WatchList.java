@@ -1,5 +1,6 @@
 package com.cognixia.fh.bingeboard.userinterface;
 
+import java.sql.Connection;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -8,7 +9,7 @@ import com.cognixia.fh.bingeboard.FilterOptions;
 // This method displays the user's watch list, in order by progress
 public class WatchList {
     // This will also call to display filtering options for the watch list
-    static void displayMenu(Scanner inputScanner) {
+    static void displayMenu(Scanner inputScanner, Connection connection) {
         // This method will display the user's watch list.
         int choice;
 
@@ -38,27 +39,27 @@ public class WatchList {
                 switch (choice) {
                     case 1:
                         System.out.println("Filtering by Progress...");
-                        displayWatchList(inputScanner, FilterOptions.BY_PROGRESS);
+                        displayWatchList(inputScanner, connection, FilterOptions.BY_PROGRESS);
                         break;
                     case 2:
                         System.out.println("Filtering by Director...");
-                        displayWatchList(inputScanner,  FilterOptions.BY_DIRECTOR);
+                        displayWatchList(inputScanner, connection, FilterOptions.BY_DIRECTOR);
                         break;
                     case 3:
                         System.out.println("Filtering by Writer...");
-                        displayWatchList(inputScanner, FilterOptions.BY_WRITER);
+                        displayWatchList(inputScanner, connection, FilterOptions.BY_WRITER);
                         break;
                     case 4:
                         System.out.println("Filtering by Actor...");
-                        displayWatchList(inputScanner,  FilterOptions.BY_ACTOR);
+                        displayWatchList(inputScanner, connection, FilterOptions.BY_ACTOR);
                         break;
                     case 5:
                         System.out.println("Filtering by Genre...");
-                        displayWatchList(inputScanner, FilterOptions.BY_GENRE);
+                        displayWatchList(inputScanner, connection, FilterOptions.BY_GENRE);
                         break;
                     case 6:
                         System.out.println("Filtering by TV Network...");
-                        displayWatchList(inputScanner,  FilterOptions.BY_TV_NETWORK);
+                        displayWatchList(inputScanner, connection, FilterOptions.BY_TV_NETWORK);
                         break;
                     case 7:
                         System.out.println("Returning to the main menu...");
@@ -80,7 +81,7 @@ public class WatchList {
     }
 
     // This method will view the user's watch list based on the selected filter option
-    static void displayWatchList(Scanner inputScanner, FilterOptions filterOption) {
+    static void displayWatchList(Scanner inputScanner, Connection connection, FilterOptions filterOption) {
         System.out.println("Viewing your watch list with filter: " + filterOption);
 
         // Prompt the user to enter the filter criteria

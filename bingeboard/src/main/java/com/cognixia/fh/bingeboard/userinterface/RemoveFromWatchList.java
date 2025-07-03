@@ -1,11 +1,12 @@
 package com.cognixia.fh.bingeboard.userinterface;
 
+import java.sql.Connection;
 import java.util.Scanner;
 
 import com.cognixia.fh.bingeboard.exceptions.ShowNotFoundException;
 
 public class RemoveFromWatchList {
-    static void displayMenu(Scanner inputScanner) {
+    static void displayMenu(Scanner inputScanner, Connection connection) {
         System.out.println("Enter the name of the show you want to remove from your watchlist:");
         String showName = inputScanner.nextLine();
 

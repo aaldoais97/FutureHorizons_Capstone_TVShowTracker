@@ -1,46 +1,59 @@
 package com.cognixia.fh.bingeboard.userinterface;
 
+import java.sql.Connection;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import com.cognixia.fh.bingeboard.dao.Users;
 
 public class Login {
     private static String username;
     private static String password;
+    private static int userId;
+    private static Users user;
 
-    public static void signinPage(Scanner inputScanner) {
+    public static void signinPage(Scanner inputScanner, Connection connection) {
         boolean validLogin = false;
         
         while (!validLogin) {
             // Get username
-            System.out.println("Please enter your username and press 'enter':");
+            System.out.println("Please enter your username:");
             username = inputScanner.nextLine(); // No need for try-catch here
 
+            
+
             // Get password
-            System.out.println("Please enter your password and press 'enter':");
+            System.out.println("Please enter your password:");
             password = inputScanner.nextLine();
 
             // Check if login combination matches existing user
-            // INSERT CODE HERE TO CHECK SQL DB
-
-
-            // Validate password with a length and regex to check for at least 6 characters, 1 digit, and 1 symbol
-            if (password.length() > 6 && password.matches("(?=.*\\d)(?=.*[^a-zA-Z0-9]).+")) {
-                validLogin = true; // Valid login, exit loop
-                System.out.println("\nLogin successful! Welcome, " + username + "!\n");
-            } else {
-                System.out.println("Password must be at least 6 characters long and contain at least 1 digit and 1 symbol.\n");
+            userId = Users.validateLogin(connection, username, password);
+            if (userId != -1) {
+                validLogin = true;
+            }
+            else {
+                System.out.println("Invalid username or password. Please try again.\n");
             }
         }
+
+        user = new Users(userId, username, password); // Create a new Users object with the provided username and password
+        System.out.println("\nLogin successful! Welcome, " + username + "!\n"); 
     }
 
-    public static void signupPage(Scanner inputScanner) {
+    public static void signupPage(Scanner inputScanner, Connection connection) {
         // Get username
         System.out.println("Please enter a username:");
         username = inputScanner.nextLine();
 
         if(username.isEmpty()) {
             System.out.println("Username cannot be empty. Please try again.\n");
-            signupPage(inputScanner); // Retry sign-up if username is empty
+            signupPage(inputScanner, connection); // Retry sign-up if username is empty
+        }
+
+        // Check if username is already taken
+        if (Users.usernameExists(connection, username)) {
+            System.out.println("Username already exists. Please try a different username.\n");
+            signupPage(inputScanner, connection); // Retry sign-up if username exists
         }
 
         // Keep looping until a valid password is entered and confirmed
@@ -60,17 +73,23 @@ public class Login {
 
             // Validate password with a length and regex to check for at least 6 characters, 1 digit, and 1 symbol
             if (password.length() > 6 && password.matches("(?=.*\\d)(?=.*[^a-zA-Z0-9]).+")) {
-                // INSERT CODE HERE TO ADD USER TO SQL DB
-                System.out.println("\nSign up successful! Welcome, " + username + "!\n");
-                break; // Exit loop if sign-up is successful
+                break; // Exit loop to complete sign-up if validation passes
             } else {
                 System.out.println("Password must be at least 6 characters long and contain at least 1 digit and 1 symbol.\n");
-                continue; // Retry password input if validation fails
             }
+        }
+
+        // Insert new user into the database
+        user = Users.insertNewUser(connection, username, password);
+        if (user != null) {
+            System.out.println("\nSign up successful! Welcome, " + username + "!\n");
+        } else {
+            System.out.println("Sign up failed. Please try again.\n");
+            signupPage(inputScanner, connection); // Retry sign-up if insertion fails
         }
     }
 
-    public static void startPage(Scanner inputScanner) {
+    public static Users startPage(Scanner inputScanner, Connection connection) {
         // Display start page message
         System.out.println("Welcome to the BingeBoard!");
         System.out.println("Your entertainment tracking hub for all things binge-worthy!\n");
@@ -85,11 +104,11 @@ public class Login {
 
                 switch (choice) {
                     case 1:
-                        signinPage(inputScanner);
-                        return; // Exit the loop after successful sign-in
+                        signinPage(inputScanner, connection);
+                        break; // Exit the loop if sign-in is successful
                     case 2:
-                        signupPage(inputScanner);
-                        return; // Exit the loop after successful sign-up
+                        signupPage(inputScanner, connection);
+                        break; // Exit the loop if sign-up is successful
                     default:
                         System.out.println("Invalid choice. Please try again.\n");
                 }
@@ -117,7 +136,7 @@ public class Login {
         password = null; // Clear the password
     }
 
-    public static void signOut(Scanner inputScanner) {
+    public static void signOut(Scanner inputScanner, Connection connection) {
         clearCredentials(); // Clear the stored login credentials
 
         // Display sign-out message and 2 new lines for better readability
@@ -125,6 +144,6 @@ public class Login {
         System.out.println();
         System.out.println();
         
-        startPage(inputScanner);   // Return to the sign-in page
+        startPage(inputScanner, connection);   // Return to the sign-in page
     }
 }

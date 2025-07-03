@@ -1,5 +1,6 @@
 package com.cognixia.fh.bingeboard.userinterface;
 
+import java.sql.Connection;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -7,7 +8,7 @@ import com.cognixia.fh.bingeboard.FilterOptions;
 
 // This method will display the menu for the user to filter shows.
 public class Catalog {
-    static void displayMenu(Scanner inputScanner) {
+    static void displayMenu(Scanner inputScanner, Connection connection) {
         int choice;
 
         System.out.println("Viewing the catalog of shows...");
@@ -35,27 +36,27 @@ public class Catalog {
                 switch (choice) {
                     case 1:
                         System.out.println("Viewing all shows in the catalog...");
-                        // Implement logic to view all shows in the catalog
+                        viewCatalog(inputScanner, connection, FilterOptions.VIEW_ALL);
                         break;
                     case 2:
                         System.out.println("Filtering by Director...");
-                        // Implement logic to filter catalog by director
+                        viewCatalog(inputScanner, connection, FilterOptions.BY_DIRECTOR);
                         break;
                     case 3:
                         System.out.println("Filtering by Writer...");
-                        // Implement logic to filter catalog by writer
+                        viewCatalog(inputScanner, connection, FilterOptions.BY_WRITER);
                         break;
                     case 4:
                         System.out.println("Filtering by Actor...");
-                        // Implement logic to filter catalog by actor
+                        viewCatalog(inputScanner, connection, FilterOptions.BY_ACTOR);
                         break;
                     case 5:
                         System.out.println("Filtering by Genre...");
-                        // Implement logic to filter catalog by genre
+                        viewCatalog(inputScanner, connection, FilterOptions.BY_GENRE);
                         break;
                     case 6:
                         System.out.println("Filtering by TV Network...");
-                        // Implement logic to filter catalog by TV network
+                        viewCatalog(inputScanner, connection, FilterOptions.BY_TV_NETWORK);
                         break;
                     case 7:
                         System.out.println("Returning to the main menu...");
@@ -76,7 +77,7 @@ public class Catalog {
         }
     }
 
-    static void viewCatalog(Scanner inputScanner, FilterOptions filterOption) {
+    static void viewCatalog(Scanner inputScanner, Connection connection, FilterOptions filterOption) {
         System.out.println("Viewing the catalog with filter: " + filterOption);
         
         switch(filterOption) {
