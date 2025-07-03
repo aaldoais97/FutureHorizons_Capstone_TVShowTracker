@@ -52,7 +52,7 @@ public class Login {
 
         // Check if username is already taken
         if (Users.usernameExists(connection, username)) {
-            System.out.println("Username already exists. Please try a different username.\n");
+            System.out.println("Username already exists " + username + ". Please try a different username.\n");
             signupPage(inputScanner, connection); // Retry sign-up if username exists
         }
 
@@ -105,10 +105,10 @@ public class Login {
                 switch (choice) {
                     case 1:
                         signinPage(inputScanner, connection);
-                        break; // Exit the loop if sign-in is successful
+                        return user; // Exit the loop & function if sign-in is successful
                     case 2:
                         signupPage(inputScanner, connection);
-                        break; // Exit the loop if sign-up is successful
+                        return user; // Exit the loop & function if sign-up is successful
                     default:
                         System.out.println("Invalid choice. Please try again.\n");
                 }

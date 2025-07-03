@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import com.cognixia.fh.bingeboard.connection.ConnectionManager;
+import com.cognixia.fh.bingeboard.dao.Users;
 import com.cognixia.fh.bingeboard.userinterface.Login;
 import com.cognixia.fh.bingeboard.userinterface.MainInterface;
 
@@ -19,6 +20,7 @@ public class BingeBoardRunner
     {
         Scanner inputScanner = new Scanner(System.in);
         Connection connection = null; // Initialize the connection variable
+        Users user = null; // Initialize the user variable
 
         // Attempt to establish a connection to the database
         try {
@@ -40,7 +42,10 @@ public class BingeBoardRunner
 
         // This code will not be reached if the connection fails, but just to be safe, check for null
         if (connection != null) {
-            Login.startPage(inputScanner, connection); // Start the login process
+            user = Login.startPage(inputScanner, connection); // Start the login process
+        }
+        
+        if (user != null) {
             MainInterface.displayMainMenu(inputScanner, connection); // Display the main menu after successful login
         }
 

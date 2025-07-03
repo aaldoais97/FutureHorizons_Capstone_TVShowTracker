@@ -23,18 +23,18 @@ public interface UsersIntrfc {
             checkUsernameStmt.setString(1, username);
             ResultSet rs = checkUsernameStmt.executeQuery();
             if (rs.next() && rs.getInt(1) > 0) {
-                return false; // Username exists
+                return true; // Username exists
             } else {
-                return true; // Username does not exist
+                return false; // Username does not exist
             }
         } catch (SQLException e) {
             System.out.println("An error occurred while checking the username: " + e.getMessage());
             e.printStackTrace(); // Print the stack trace for debugging purposes
-            return false; // Return false in case of an error
+            return true; // Return true in case of an error
         } catch (Exception e) {
             System.out.println("An error occurred while checking the username: " + e.getMessage());
             e.printStackTrace(); // Print the stack trace for debugging purposes
-            return false; // Return false in case of an error
+            return true; // Return true in case of an error
         }
     }
 

@@ -1,5 +1,7 @@
 package com.cognixia.fh.bingeboard.dao;
 
+import java.sql.Connection;
+
 public class Users implements UsersIntrfc {
     int id;
     String username;
@@ -47,5 +49,17 @@ public class Users implements UsersIntrfc {
     @Override
     public String getLastName() {
         return lastName;
+    }
+
+    public static boolean usernameExists(Connection connection, String username) {
+        return UsersIntrfc.usernameExists(connection, username);
+    }
+
+    public static int validateLogin(Connection connection, String username, String password) {
+        return UsersIntrfc.validateLogin(connection, username, password);
+    }
+
+    public static Users insertNewUser(Connection connection, String username, String password) {
+        return UsersIntrfc.insertNewUser(connection, username, password);
     }
 }
