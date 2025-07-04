@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.cognixia.fh.bingeboard.dao.ProgressLists;
 import com.cognixia.fh.bingeboard.dao.Users;
 
 public class Login {
@@ -12,7 +13,7 @@ public class Login {
     private static int userId;
     private static Users user;
 
-    public static void signinPage(Scanner inputScanner, Connection connection) {
+    public static void signinPage(Scanner inputScanner, Connection connection, ProgressLists progressList) {
         boolean validLogin = false;
         
         while (!validLogin) {
@@ -40,20 +41,20 @@ public class Login {
         System.out.println("\nLogin successful! Welcome, " + username + "!\n"); 
     }
 
-    public static void signupPage(Scanner inputScanner, Connection connection) {
+    public static void signupPage(Scanner inputScanner, Connection connection, ProgressLists progressList) {
         // Get username
         System.out.println("Please enter a username:");
         username = inputScanner.nextLine();
 
         if(username.isEmpty()) {
             System.out.println("Username cannot be empty. Please try again.\n");
-            signupPage(inputScanner, connection); // Retry sign-up if username is empty
+            signupPage(inputScanner, connection, progressList); // Retry sign-up if username is empty
         }
 
         // Check if username is already taken
         if (Users.usernameExists(connection, username)) {
             System.out.println("Username already exists " + username + ". Please try a different username.\n");
-            signupPage(inputScanner, connection); // Retry sign-up if username exists
+            signupPage(inputScanner, connection, progressList); // Retry sign-up if username exists
         }
 
         // Keep looping until a valid password is entered and confirmed
@@ -79,17 +80,20 @@ public class Login {
             }
         }
 
-        // Insert new user into the database
+        // Insert new user and progress list into the database
         user = Users.insertNewUser(connection, username, password);
+        progressList = ProgressLists.createProgressList(connection, user.getId());
+
         if (user != null) {
             System.out.println("\nSign up successful! Welcome, " + username + "!\n");
         } else {
             System.out.println("Sign up failed. Please try again.\n");
-            signupPage(inputScanner, connection); // Retry sign-up if insertion fails
+            signupPage(inputScanner, connection, progressList); // Retry sign-up if insertion fails
         }
+
     }
 
-    public static Users startPage(Scanner inputScanner, Connection connection) {
+    public static Users startPage(Scanner inputScanner, Connection connection, ProgressLists progressList) {
         // Display start page message
         System.out.println("Welcome to the BingeBoard!");
         System.out.println("Your entertainment tracking hub for all things binge-worthy!\n");
@@ -104,10 +108,10 @@ public class Login {
 
                 switch (choice) {
                     case 1:
-                        signinPage(inputScanner, connection);
+                        signinPage(inputScanner, connection, progressList);
                         return user; // Exit the loop & function if sign-in is successful
                     case 2:
-                        signupPage(inputScanner, connection);
+                        signupPage(inputScanner, connection, progressList);
                         return user; // Exit the loop & function if sign-up is successful
                     default:
                         System.out.println("Invalid choice. Please try again.\n");
@@ -136,14 +140,14 @@ public class Login {
         password = null; // Clear the password
     }
 
-    public static void signOut(Scanner inputScanner, Connection connection) {
+    public static void signOut(Scanner inputScanner, Connection connection, ProgressLists progressList) {
         clearCredentials(); // Clear the stored login credentials
 
         // Display sign-out message and 2 new lines for better readability
         System.out.println("You have successfully signed out. Thank you for using BingeBoard!");
         System.out.println();
         System.out.println();
-        
-        startPage(inputScanner, connection);   // Return to the sign-in page
+
+        startPage(inputScanner, connection, progressList);   // Return to the sign-in page
     }
 }

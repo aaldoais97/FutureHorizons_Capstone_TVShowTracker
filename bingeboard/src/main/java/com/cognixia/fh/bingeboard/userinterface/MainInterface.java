@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.cognixia.fh.bingeboard.dao.ProgressLists;
+import com.cognixia.fh.bingeboard.dao.Users;
+
 // This class will serve as the main interface for the BingeBoard application.
 // It will handle user interactions, display menus, and manage navigation between different features of the application.
 public class MainInterface {
     // This method displays the main menu and handles user input for navigating through the application.
-    public static void displayMainMenu(Scanner inputScanner, Connection connection) {
-        int choice; // Variable to store the user's menu choice\
+    public static void displayMainMenu(Scanner inputScanner, Connection connection, Users user , ProgressLists progressList) {
+        int choice; // Variable to store the user's menu choice
         boolean exit = false; // Flag to control the exit condition
 
         System.out.println("Welcome to BingeBoard!");
@@ -37,22 +40,22 @@ public class MainInterface {
 
                 switch (choice) {
                     case 1:
-                        viewWatchList(inputScanner, connection);
+                        viewWatchList(inputScanner, connection, user, progressList);
                         break;
                     case 2:
-                        updateWatchList(inputScanner, connection);
+                        updateWatchList(inputScanner, connection, user, progressList);
                         break;
                     case 3:
-                        removeFromWatchList(inputScanner, connection);
+                        removeFromWatchList(inputScanner, connection, user, progressList);
                         break;
                     case 4:
                         vewCatalog(inputScanner, connection);
                         break;
                     case 5:
-                        signOut(inputScanner, connection);
+                        signOut(inputScanner, connection, user, progressList);
                         break;
                     case 6:
-                        exitBingeBoard(); 
+                        exitBingeBoard(user, progressList);
                         exit = true; // Set exit flag to true to break the loop
                         break;
                     default:
@@ -76,19 +79,19 @@ public class MainInterface {
     }
 
     // Other methods for handling user input and navigating through the application can be added here.
-    private static void viewWatchList(Scanner inputScanner, Connection connection) {
+    private static void viewWatchList(Scanner inputScanner, Connection connection, Users user, ProgressLists progressList) {
         // Display the user's watch list and corresponding menu
         WatchList.displayMenu(inputScanner, connection);
     }
 
-    private static void updateWatchList(Scanner inputScanner, Connection connection) {
+    private static void updateWatchList(Scanner inputScanner, Connection connection, Users user, ProgressLists progressList) {
         // Code to update the user's watch list
         UpdateWatchList.displayMenu(inputScanner, connection);
         // Implement logic to add or modify items in the watch list
         
     }
 
-    private static void removeFromWatchList(Scanner inputScanner, Connection connection) {
+    private static void removeFromWatchList(Scanner inputScanner, Connection connection, Users user, ProgressLists progressList) {
         // Code to remove an item from the user's watch list
         RemoveFromWatchList.displayMenu(inputScanner, connection);
         // Implement logic to remove an item from the watch list
@@ -102,17 +105,18 @@ public class MainInterface {
         
     }
 
-    private static void signOut(Scanner inputScanner, Connection connection) {
+    private static void signOut(Scanner inputScanner, Connection connection, Users user, ProgressLists progressList) {
         // Code to sign out the user
         System.out.println("Signing out...");
 
-        Login.signOut(inputScanner, connection);
+        Login.signOut(inputScanner, connection, progressList);
     }
 
-    private static void exitBingeBoard() {
+    private static void exitBingeBoard(Users user, ProgressLists progressList) {
         // Print exit message
         System.out.println("Exiting BingeBoard. Thank you for using our service!");
 
-        Login.clearCredentials(); // Clear the stored login credentials
+        user = null; // Clear the user variable to allow garbage collection
+        progressList = null; // Clear the progress list variable to allow garbage collection
     }
 }

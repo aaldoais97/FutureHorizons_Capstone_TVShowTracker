@@ -82,6 +82,7 @@ public interface UsersIntrfc {
             System.out.println("An error occurred while inserting the new user: " + e.getMessage());
             e.printStackTrace(); // Print the stack trace for debugging purposes
         }
+        
         return null; // Return null if insertion fails
     }
 

@@ -18,8 +18,6 @@ create table users (
 -- Each user must have one progress list and each list must have one user
 create table progress_lists (
 	id int primary key,
-    seasons_completed int,
-    episodes_completed int,
     
     foreign key(id) references users(id)
 );
@@ -83,6 +81,8 @@ create table shows_progress_lists (
 	id int primary key,
     progress_list_id int,
 	show_id int,
+    seasons_completed int,
+    episodes_completed int,
 
     foreign key(progress_list_id) references progress_lists(id),
 	foreign key(show_id) references shows(id)

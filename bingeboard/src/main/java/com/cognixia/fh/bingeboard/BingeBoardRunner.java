@@ -6,13 +6,14 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import com.cognixia.fh.bingeboard.connection.ConnectionManager;
+import com.cognixia.fh.bingeboard.dao.ProgressLists;
 import com.cognixia.fh.bingeboard.dao.Users;
 import com.cognixia.fh.bingeboard.userinterface.Login;
 import com.cognixia.fh.bingeboard.userinterface.MainInterface;
 
 /**
- * Hello world!
- *
+ * BingeBoardRunner is the main class that starts the BingeBoard application.
+ * It initializes the database connection, handles user login, and displays the main interface.
  */
 public class BingeBoardRunner 
 {
@@ -21,6 +22,7 @@ public class BingeBoardRunner
         Scanner inputScanner = new Scanner(System.in);
         Connection connection = null; // Initialize the connection variable
         Users user = null; // Initialize the user variable
+        ProgressLists progressList = null; // Initialize the show progress list
 
         // Attempt to establish a connection to the database
         try {
@@ -42,11 +44,11 @@ public class BingeBoardRunner
 
         // This code will not be reached if the connection fails, but just to be safe, check for null
         if (connection != null) {
-            user = Login.startPage(inputScanner, connection); // Start the login process
+            user = Login.startPage(inputScanner, connection, progressList); // Start the login process
         }
         
         if (user != null) {
-            MainInterface.displayMainMenu(inputScanner, connection); // Display the main menu after successful login
+            MainInterface.displayMainMenu(inputScanner, connection, user, progressList); // Display the main menu after successful login
         }
 
         inputScanner.close(); // Close the scanner to prevent resource leaks
