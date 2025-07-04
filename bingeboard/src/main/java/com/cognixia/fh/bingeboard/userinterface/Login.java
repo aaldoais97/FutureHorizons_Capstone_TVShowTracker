@@ -38,6 +38,7 @@ public class Login {
         }
 
         user = new Users(userId, username, password); // Create a new Users object with the provided username and password
+        progressList = new ProgressLists(userId, userId); // Create a new ProgressLists object with the user ID
         System.out.println("\nLogin successful! Welcome, " + username + "!\n"); 
     }
 
