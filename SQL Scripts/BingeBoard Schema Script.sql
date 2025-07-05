@@ -1,11 +1,11 @@
-drop database if exists bingeboard_db;
-create database bingeboard_db;
-use bingeboard_db;
-
 /*
 	This script creates the BingeBoard database and all tables
     (WARNING: THIS DELETES AND REPLACES THE DATABASE WITH AN EMPTY ONE)
 */
+
+drop database if exists bingeboard_db;
+create database bingeboard_db;
+use bingeboard_db;
 
 create table users (
 	id int primary key auto_increment,
@@ -81,6 +81,13 @@ create table shows_progress_lists (
 	id int primary key,
     progress_list_id int,
 	show_id int,
+    
+    /*
+    While these values can be found through a series of join statements,
+    this makes necessary queries simpler while only utilizing the space
+    of 2 ints per show in a user's progress list, which is negligible
+    with respect to performance and storage.
+    */
     seasons_completed int,
     episodes_completed int,
 

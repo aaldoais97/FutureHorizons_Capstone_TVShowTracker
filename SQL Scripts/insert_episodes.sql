@@ -1,6 +1,7 @@
 -- This script will not run yet. Needs seasons table to be populated.
 
 -- First batch of 3 shows (first 3 seasons, first 10 episodes each)
+-- Better Call Saul
 INSERT INTO episodes (id, name, summary, season_id) VALUES
 (1, 'BCS S1E01', 'Conflicts reach a peak', 1),
 (2, 'BCS S1E02', 'Conflicts reach a peak', 1),
@@ -32,6 +33,8 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (28, 'BCS S3E08', 'A major shift occurs', 3),
 (29, 'BCS S3E09', 'A secret is revealed', 3),
 (30, 'BCS S3E10', 'Consequences follow betrayal', 3),
+
+-- The Succession
 (31, 'SUC S1E01', 'Consequences follow betrayal', 4),
 (32, 'SUC S1E02', 'Old wounds resurface', 4),
 (33, 'SUC S1E03', 'Family drama escalates', 4),
@@ -61,6 +64,8 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (57, 'SUC S3E07', 'Plans begin to unravel', 6),
 (58, 'SUC S3E08', 'Plans begin to unravel', 6),
 (59, 'SUC S3E09', 'A major shift occurs', 6),
+
+-- The Umbrella Academy
 (60, 'TUA S1E01', 'Lines are crossed today', 7),
 (61, 'TUA S1E02', 'Unexpected events unfold', 7),
 (62, 'TUA S1E03', 'A secret is revealed', 7),
@@ -93,6 +98,7 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (89, 'TUA S3E10', 'Trust is tested hard', 9);
 
 -- Second batch of 3 shows
+-- Dark
 INSERT INTO episodes (id, name, summary, season_id) VALUES
 (90, 'DARK S1E01', 'Hope fades quickly', 10),
 (91, 'DARK S1E02', 'Secrets begin to unravel', 10),
@@ -124,6 +130,8 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (117, 'DARK S3E08', 'Past haunts the present', 12),
 (118, 'DARK S3E09', 'Allies turn to foes', 12),
 (119, 'DARK S3E10', 'Allies turn to foes', 12),
+
+-- The Witcher
 (120, 'TW S1E01', 'Secrets begin to unravel', 13),
 (121, 'TW S1E02', 'Hope fades quickly', 13),
 (122, 'TW S1E03', 'Past haunts the present', 13),
@@ -154,6 +162,8 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (147, 'TW S3E08', 'Hope fades quickly', 15),
 (148, 'TW S3E09', 'A new enemy appears', 15),
 (149, 'TW S3E10', 'Plans go awry again', 15),
+
+-- Westworld
 (150, 'WW S1E01', 'Power struggles intensify', 16),
 (151, 'WW S1E02', 'Secrets begin to unravel', 16),
 (152, 'WW S1E03', 'Hope fades quickly', 16),
@@ -186,6 +196,7 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (179, 'WW S3E10', 'Betrayal changes everything', 18);
 
 -- Third batch of 3 shows
+-- Mind Hunter
 INSERT INTO episodes (id, name, summary, season_id) VALUES
 (180, 'MH S1E01', 'New mysteries are revealed', 19),
 (181, 'MH S1E02', 'Alliances are tested again', 19),
@@ -217,6 +228,8 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (207, 'MH S3E08', 'Unexpected betrayal arises', 21),
 (208, 'MH S3E09', 'The enemy strikes hard', 21),
 (209, 'MH S3E10', 'Past secrets resurface now', 21),
+
+-- Ozark
 (210, 'OZ S1E01', 'A risky plan unfolds', 22),
 (211, 'OZ S1E02', 'Past secrets resurface now', 22),
 (212, 'OZ S1E03', 'Power shifts unexpectedly', 22),
@@ -247,6 +260,8 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (237, 'OZ S3E08', 'Past secrets resurface now', 24),
 (238, 'OZ S3E09', 'A risky plan unfolds', 24),
 (239, 'OZ S3E10', 'Danger closes in quickly', 24),
+
+-- Peaky Blinders
 (240, 'PB S1E01', 'Danger closes in quickly', 25),
 (241, 'PB S1E02', 'Alliances are tested again', 25),
 (242, 'PB S1E03', 'Danger closes in quickly', 25),
@@ -279,6 +294,7 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (269, 'PB S3E10', 'Danger closes in quickly', 27);
 
 -- Fourth batch of 3 shows
+-- The Boys
 INSERT INTO episodes (id, name, summary, season_id) VALUES
 (270, 'TB S1E01', 'A dangerous plan unfolds', 28),
 (271, 'TB S1E02', 'Old enemies return swiftly', 28),
@@ -310,6 +326,8 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (297, 'TB S3E08', 'Fear spreads through ranks', 30),
 (298, 'TB S3E09', 'Old enemies return swiftly', 30),
 (299, 'TB S3E10', 'Old enemies return swiftly', 30),
+
+-- Fargo
 (300, 'FAR S1E01', 'Power struggles intensify further', 31),
 (301, 'FAR S1E02', 'Fear spreads through ranks', 31),
 (302, 'FAR S1E03', 'A dangerous plan unfolds', 31),
@@ -340,6 +358,8 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (327, 'FAR S3E08', 'Fear spreads through ranks', 33),
 (328, 'FAR S3E09', 'Chaos erupts unexpectedly', 33),
 (329, 'FAR S3E10', 'Justice takes a dark turn', 33),
+
+-- Narcos
 (330, 'NAR S1E01', 'New threats challenge heroes', 34),
 (331, 'NAR S1E02', 'A dangerous plan unfolds', 34),
 (332, 'NAR S1E03', 'A dangerous plan unfolds', 34),
@@ -372,6 +392,7 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (359, 'NAR S3E10', 'New threats challenge heroes', 36);
 
 -- Fifth batch of 3 shows
+-- Black Mirror
 INSERT INTO episodes (id, name, summary, season_id) VALUES
 (360, 'BM S1E01', 'Power plays escalate quickly', 37),
 (361, 'BM S1E02', 'Alliances break under stress', 37),
@@ -403,6 +424,8 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (387, 'BM S3E08', 'Dark secrets come to light', 39),
 (388, 'BM S3E09', 'Moral dilemmas intensify', 39),
 (389, 'BM S3E10', 'Choices carry dire costs', 39),
+
+-- Sherlock
 (390, 'SH S1E01', 'Alliances break under stress', 40),
 (391, 'SH S1E02', 'A mystery deepens further', 40),
 (392, 'SH S1E03', 'Power plays escalate quickly', 40),
@@ -433,6 +456,8 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (417, 'SH S3E08', 'Alliances break under stress', 42),
 (418, 'SH S3E09', 'Alliances break under stress', 42),
 (419, 'SH S3E10', 'A mystery deepens further', 42),
+
+-- House of Cards
 (420, 'HOC S1E01', 'A mystery deepens further', 43),
 (421, 'HOC S1E02', 'Old foes return stronger', 43),
 (422, 'HOC S1E03', 'A mystery deepens further', 43),
@@ -465,6 +490,7 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (449, 'HOC S3E10', 'Choices carry dire costs', 45);
 
 -- Sixth batch of 3 shows
+-- Mr. Robot
 INSERT INTO episodes (id, name, summary, season_id) VALUES
 (450, 'MR S1E01', 'Hidden agendas are revealed', 46),
 (451, 'MR S1E02', 'Power struggles intensify hard', 46),
@@ -496,6 +522,8 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (477, 'MR S3E08', 'Power struggles intensify hard', 48),
 (478, 'MR S3E09', 'Destinies become intertwined', 48),
 (479, 'MR S3E10', 'Unexpected truths change everything', 48),
+
+-- Luther
 (480, 'LUT S1E01', 'Destinies become intertwined', 49),
 (481, 'LUT S1E02', 'Alliances face ultimate tests', 49),
 (482, 'LUT S1E03', 'New conspiracies take shape', 49),
@@ -526,6 +554,8 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 (507, 'LUT S3E08', 'Power struggles intensify hard', 51),
 (508, 'LUT S3E09', 'Trust crumbles under pressure', 51),
 (509, 'LUT S3E10', 'Unexpected truths change everything', 51),
+
+-- The Crown
 (510, 'TC S1E01', 'Trust crumbles under pressure', 52),
 (511, 'TC S1E02', 'New conspiracies take shape', 52),
 (512, 'TC S1E03', 'Hidden agendas are revealed', 52),
@@ -559,69 +589,68 @@ INSERT INTO episodes (id, name, summary, season_id) VALUES
 
 -- Seventh batch, this time 2 shows, reaching 20 shows total,
 -- first 3 seasons, first 10 episodes each
-
--- The Expanse (abbreviated as TE)
+-- The Expanse
 INSERT INTO episodes (id, name, summary, season_id) VALUES
-(540, 'TE S1E01', 'A mysterious distress signal is discovered', 100),
-(541, 'TE S1E02', 'Tensions rise on Ceres Station', 100),
-(542, 'TE S1E03', 'Holden reveals the truth about the Scopuli', 100),
-(543, 'TE S1E04', 'Investigations take a dangerous turn', 100),
-(544, 'TE S1E05', 'The Canterbury crew fights to survive', 100),
-(545, 'TE S1E06', 'Secrets about the protomolecule emerge', 100),
-(546, 'TE S1E07', 'Unexpected alliances are formed', 100),
-(547, 'TE S1E08', 'A deadly threat approaches Eros', 100),
-(548, 'TE S1E09', 'Miller uncovers critical evidence', 100),
-(549, 'TE S1E10', 'Eros becomes ground zero for disaster', 100),
-(550, 'TE S2E01', 'The crew plans a risky infiltration', 101),
-(551, 'TE S2E02', 'Martian tensions escalate rapidly', 101),
-(552, 'TE S2E03', 'New weapons tests threaten peace', 101),
-(553, 'TE S2E04', 'Holden confronts his darkest fears', 101),
-(554, 'TE S2E05', 'Fred Johnson makes a bold move', 101),
-(555, 'TE S2E06', 'Miller and Holden join forces', 101),
-(556, 'TE S2E07', 'A devastating biohazard spreads', 101),
-(557, 'TE S2E08', 'Survivors struggle on Ganymede', 101),
-(558, 'TE S2E09', 'Plans unravel under pressure', 101),
-(559, 'TE S2E10', 'The protomolecule evolves dangerously', 101),
-(560, 'TE S3E01', 'Earth and Mars prepare for war', 102),
-(561, 'TE S3E02', 'A rescue mission turns deadly', 102),
-(562, 'TE S3E03', 'Holden encounters a mysterious entity', 102),
-(563, 'TE S3E04', 'Secrets are exposed in the Ring', 102),
-(564, 'TE S3E05', 'Drummer makes a pivotal decision', 102),
-(565, 'TE S3E06', 'Protomolecule structures confound scientists', 102),
-(566, 'TE S3E07', 'An unexpected betrayal is revealed', 102),
-(567, 'TE S3E08', 'The crew faces impossible odds', 102),
-(568, 'TE S3E09', 'Holden unlocks the Ring’s secrets', 102),
-(569, 'TE S3E10', 'The system changes forever', 102);
+(540, 'TE S1E01', 'A mysterious distress signal is discovered', 55),
+(541, 'TE S1E02', 'Tensions rise on Ceres Station', 55),
+(542, 'TE S1E03', 'Holden reveals the truth about the Scopuli', 55),
+(543, 'TE S1E04', 'Investigations take a dangerous turn', 55),
+(544, 'TE S1E05', 'The Canterbury crew fights to survive', 55),
+(545, 'TE S1E06', 'Secrets about the protomolecule emerge', 55),
+(546, 'TE S1E07', 'Unexpected alliances are formed', 55),
+(547, 'TE S1E08', 'A deadly threat approaches Eros', 55),
+(548, 'TE S1E09', 'Miller uncovers critical evidence', 55),
+(549, 'TE S1E10', 'Eros becomes ground zero for disaster', 55),
+(550, 'TE S2E01', 'The crew plans a risky infiltration', 56),
+(551, 'TE S2E02', 'Martian tensions escalate rapidly', 56),
+(552, 'TE S2E03', 'New weapons tests threaten peace', 56),
+(553, 'TE S2E04', 'Holden confronts his darkest fears', 56),
+(554, 'TE S2E05', 'Fred Johnson makes a bold move', 56),
+(555, 'TE S2E06', 'Miller and Holden join forces', 56),
+(556, 'TE S2E07', 'A devastating biohazard spreads', 56),
+(557, 'TE S2E08', 'Survivors struggle on Ganymede', 56),
+(558, 'TE S2E09', 'Plans unravel under pressure', 56),
+(559, 'TE S2E10', 'The protomolecule evolves dangerously', 56),
+(560, 'TE S3E01', 'Earth and Mars prepare for war', 57),
+(561, 'TE S3E02', 'A rescue mission turns deadly', 57),
+(562, 'TE S3E03', 'Holden encounters a mysterious entity', 57),
+(563, 'TE S3E04', 'Secrets are exposed in the Ring', 57),
+(564, 'TE S3E05', 'Drummer makes a pivotal decision', 57),
+(565, 'TE S3E06', 'Protomolecule structures confound scientists', 57),
+(566, 'TE S3E07', 'An unexpected betrayal is revealed', 57),
+(567, 'TE S3E08', 'The crew faces impossible odds', 57),
+(568, 'TE S3E09', 'Holden unlocks the Ring’s secrets', 57),
+(569, 'TE S3E10', 'The system changes forever', 57);
 
--- STRANGER THINGS (abbreviated as ST)
+-- Stranger Things
 INSERT INTO episodes (id, name, summary, season_id) VALUES
-(570, 'ST S1E01', 'A boy vanishes mysteriously in Hawkins', 103),
-(571, 'ST S1E02', 'Friends uncover unsettling clues', 103),
-(572, 'ST S1E03', 'Joyce receives a shocking phone call', 103),
-(573, 'ST S1E04', 'Eleven demonstrates her powers', 103),
-(574, 'ST S1E05', 'The group devises a rescue plan', 103),
-(575, 'ST S1E06', 'A deadly creature attacks', 103),
-(576, 'ST S1E07', 'Secrets emerge about the lab', 103),
-(577, 'ST S1E08', 'The Demogorgon is confronted', 103),
-(578, 'ST S1E09', 'Will’s condition worsens', 103),
-(579, 'ST S1E10', 'A sacrifice changes everything', 103),
-(580, 'ST S2E01', 'Will struggles with visions of the Upside Down', 104),
-(581, 'ST S2E02', 'A new threat emerges in Hawkins', 104),
-(582, 'ST S2E03', 'Dustin makes a shocking discovery', 104),
-(583, 'ST S2E04', 'Eleven searches for her past', 104),
-(584, 'ST S2E05', 'Will’s connection deepens dangerously', 104),
-(585, 'ST S2E06', 'The Mind Flayer’s influence grows', 104),
-(586, 'ST S2E07', 'Eleven meets others like her', 104),
-(587, 'ST S2E08', 'The lab is overrun', 104),
-(588, 'ST S2E09', 'A desperate plan is enacted', 104),
-(589, 'ST S2E10', 'Eleven closes the gate', 104),
-(590, 'ST S3E01', 'Summer begins with new romances', 105),
-(591, 'ST S3E02', 'Strange power outages spread', 105),
-(592, 'ST S3E03', 'A sinister plot is uncovered', 105),
-(593, 'ST S3E04', 'The Russians are revealed as enemies', 105),
-(594, 'ST S3E05', 'The Mind Flayer attacks again', 105),
-(595, 'ST S3E06', 'Friends unite to fight back', 105),
-(596, 'ST S3E07', 'The mall becomes battleground', 105),
-(597, 'ST S3E08', 'A heartbreaking sacrifice is made', 105),
-(598, 'ST S3E09', 'Hopper’s fate remains unknown', 105),
-(599, 'ST S3E10', 'A mysterious package arrives', 105);
+(570, 'ST S1E01', 'A boy vanishes mysteriously in Hawkins', 58),
+(571, 'ST S1E02', 'Friends uncover unsettling clues', 58),
+(572, 'ST S1E03', 'Joyce receives a shocking phone call', 58),
+(573, 'ST S1E04', 'Eleven demonstrates her powers', 58),
+(574, 'ST S1E05', 'The group devises a rescue plan', 58),
+(575, 'ST S1E06', 'A deadly creature attacks', 58),
+(576, 'ST S1E07', 'Secrets emerge about the lab', 58),
+(577, 'ST S1E08', 'The Demogorgon is confronted', 58),
+(578, 'ST S1E09', 'Will’s condition worsens', 58),
+(579, 'ST S1E10', 'A sacrifice changes everything', 58),
+(580, 'ST S2E01', 'Will struggles with visions of the Upside Down', 59),
+(581, 'ST S2E02', 'A new threat emerges in Hawkins', 59),
+(582, 'ST S2E03', 'Dustin makes a shocking discovery', 59),
+(583, 'ST S2E04', 'Eleven searches for her past', 59),
+(584, 'ST S2E05', 'Will’s connection deepens dangerously', 59),
+(585, 'ST S2E06', 'The Mind Flayer’s influence grows', 59),
+(586, 'ST S2E07', 'Eleven meets others like her', 59),
+(587, 'ST S2E08', 'The lab is overrun', 59),
+(588, 'ST S2E09', 'A desperate plan is enacted', 59),
+(589, 'ST S2E10', 'Eleven closes the gate', 59),
+(590, 'ST S3E01', 'Summer begins with new romances', 60),
+(591, 'ST S3E02', 'Strange power outages spread', 60),
+(592, 'ST S3E03', 'A sinister plot is uncovered', 60),
+(593, 'ST S3E04', 'The Russians are revealed as enemies', 60),
+(594, 'ST S3E05', 'The Mind Flayer attacks again', 60),
+(595, 'ST S3E06', 'Friends unite to fight back', 60),
+(596, 'ST S3E07', 'The mall becomes battleground', 60),
+(597, 'ST S3E08', 'A heartbreaking sacrifice is made', 60),
+(598, 'ST S3E09', 'Hopper’s fate remains unknown', 60),
+(599, 'ST S3E10', 'A mysterious package arrives', 60);
