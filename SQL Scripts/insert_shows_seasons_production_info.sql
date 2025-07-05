@@ -230,3 +230,219 @@ INSERT INTO shows_genres (id, show_id, genre_id) VALUES
 
 (19, 10, 1), -- Mr. Robot: Drama
 (20, 10, 7); -- Mr. Robot: Thriller
+
+
+
+-- Third batch of 5 shows
+-- Insert directors (new if not already existing)
+INSERT INTO directors (id, name) VALUES
+(11, 'Neil Cross'),
+(12, 'Peter Morgan'),
+(13, 'Steven Moffat'),
+(14, 'Charlie Brooker');
+
+-- Insert shows (ids continue from 10)
+INSERT INTO shows (id, name, network_id, director_id) VALUES
+(11, 'Luther', 5, 11),           -- BBC, Neil Cross
+(12, 'The Crown', 3, 12),        -- Netflix, Peter Morgan
+(13, 'House of Cards', 3, 6),    -- Netflix, David Fincher (existing id=6)
+(14, 'Sherlock', 5, 13),         -- BBC, Steven Moffat
+(15, 'Black Mirror', 3, 14);     -- Netflix, Charlie Brooker
+
+-- Insert seasons (each with 3 seasons)
+INSERT INTO seasons (id, name, summary, show_id) VALUES
+(31, 'Luther S1', 'Season 1 of Luther', 11),
+(32, 'Luther S2', 'Season 2 of Luther', 11),
+(33, 'Luther S3', 'Season 3 of Luther', 11),
+
+(34, 'The Crown S1', 'Season 1 of The Crown', 12),
+(35, 'The Crown S2', 'Season 2 of The Crown', 12),
+(36, 'The Crown S3', 'Season 3 of The Crown', 12),
+
+(37, 'House of Cards S1', 'Season 1 of House of Cards', 13),
+(38, 'House of Cards S2', 'Season 2 of House of Cards', 13),
+(39, 'House of Cards S3', 'Season 3 of House of Cards', 13),
+
+(40, 'Sherlock S1', 'Season 1 of Sherlock', 14),
+(41, 'Sherlock S2', 'Season 2 of Sherlock', 14),
+(42, 'Sherlock S3', 'Season 3 of Sherlock', 14),
+
+(43, 'Black Mirror S1', 'Season 1 of Black Mirror', 15),
+(44, 'Black Mirror S2', 'Season 2 of Black Mirror', 15),
+(45, 'Black Mirror S3', 'Season 3 of Black Mirror', 15);
+
+-- Insert writers (new or reuse)
+INSERT INTO writers (id, name) VALUES
+(16, 'Neil Cross'),
+(17, 'Peter Morgan'),
+(18, 'Beau Willimon'),
+(19, 'Steven Moffat'),
+(20, 'Mark Gatiss'),
+(21, 'Charlie Brooker');
+
+-- Insert actors (1-2 per show)
+INSERT INTO actors (id, name) VALUES
+(21, 'Idris Elba'),
+(22, 'Ruth Wilson'),
+(23, 'Claire Foy'),
+(24, 'Matt Smith'),
+(25, 'Kevin Spacey'),
+(26, 'Robin Wright'),
+(27, 'Benedict Cumberbatch'),
+(28, 'Martin Freeman'),
+(29, 'Bryce Dallas Howard'),
+(30, 'Daniel Kaluuya');
+
+-- Link shows to writers
+INSERT INTO shows_writers (id, show_id, writer_id) VALUES
+(16, 11, 16), -- Luther: Neil Cross
+
+(17, 12, 17), -- The Crown: Peter Morgan
+
+(18, 13, 18), -- House of Cards: Beau Willimon
+
+(19, 14, 19), -- Sherlock: Steven Moffat
+(20, 14, 20), -- Sherlock: Mark Gatiss
+
+(21, 15, 21); -- Black Mirror: Charlie Brooker
+
+-- Link shows to actors
+INSERT INTO shows_actors (id, show_id, actor_id) VALUES
+(21, 11, 21), -- Luther: Idris Elba
+(22, 11, 22), -- Luther: Ruth Wilson
+
+(23, 12, 23), -- The Crown: Claire Foy
+(24, 12, 24), -- The Crown: Matt Smith
+
+(25, 13, 25), -- House of Cards: Kevin Spacey
+(26, 13, 26), -- House of Cards: Robin Wright
+
+(27, 14, 27), -- Sherlock: Benedict Cumberbatch
+(28, 14, 28), -- Sherlock: Martin Freeman
+
+(29, 15, 29), -- Black Mirror: Bryce Dallas Howard
+(30, 15, 30); -- Black Mirror: Daniel Kaluuya
+
+-- Link shows to genres (up to 2 per show)
+INSERT INTO shows_genres (id, show_id, genre_id) VALUES
+(21, 11, 1), -- Luther: Drama
+(22, 11, 2), -- Luther: Crime
+
+(23, 12, 1), -- The Crown: Drama
+(24, 12, 7), -- The Crown: Thriller
+
+(25, 13, 1), -- House of Cards: Drama
+(26, 13, 2), -- House of Cards: Crime
+
+(27, 14, 1), -- Sherlock: Drama
+(28, 14, 2), -- Sherlock: Crime
+
+(29, 15, 5), -- Black Mirror: Sci-Fi
+(30, 15, 7); -- Black Mirror: Thriller
+
+
+
+-- Fourth batch of 5 shows
+-- Insert directors (new if not already existing)
+INSERT INTO directors (id, name) VALUES
+(15, 'Tim Miller'),
+(16, 'Noah Hawley'),
+(17, 'José Padilha'),
+(18, 'Eric Kripke');
+
+-- Insert shows (ids continue from 15)
+INSERT INTO shows (id, name, network_id, director_id) VALUES
+(16, 'Love, Death & Robots', 3, 15), -- Netflix, Tim Miller
+(17, 'Fargo', 2, 16),                -- HBO, Noah Hawley
+(18, 'Narcos', 3, 17),               -- Netflix, José Padilha
+(19, 'The Boys', 4, 18),             -- Amazon Prime, Eric Kripke
+(20, 'Breaking Bad', 1, 1);          -- AMC, Vince Gilligan (existing id=1)
+
+-- Insert seasons (each with 3 seasons)
+INSERT INTO seasons (id, name, summary, show_id) VALUES
+(46, 'Love, Death & Robots S1', 'Season 1 of Love, Death & Robots', 16),
+(47, 'Love, Death & Robots S2', 'Season 2 of Love, Death & Robots', 16),
+(48, 'Love, Death & Robots S3', 'Season 3 of Love, Death & Robots', 16),
+
+(49, 'Fargo S1', 'Season 1 of Fargo', 17),
+(50, 'Fargo S2', 'Season 2 of Fargo', 17),
+(51, 'Fargo S3', 'Season 3 of Fargo', 17),
+
+(52, 'Narcos S1', 'Season 1 of Narcos', 18),
+(53, 'Narcos S2', 'Season 2 of Narcos', 18),
+(54, 'Narcos S3', 'Season 3 of Narcos', 18),
+
+(55, 'The Boys S1', 'Season 1 of The Boys', 19),
+(56, 'The Boys S2', 'Season 2 of The Boys', 19),
+(57, 'The Boys S3', 'Season 3 of The Boys', 19),
+
+(58, 'Breaking Bad S1', 'Season 1 of Breaking Bad', 20),
+(59, 'Breaking Bad S2', 'Season 2 of Breaking Bad', 20),
+(60, 'Breaking Bad S3', 'Season 3 of Breaking Bad', 20);
+
+-- Insert writers (new or reuse)
+INSERT INTO writers (id, name) VALUES
+(22, 'Tim Miller'),
+(23, 'Noah Hawley'),
+(24, 'Chris Brancato'),
+(25, 'Eric Kripke'),
+(26, 'Vince Gilligan');
+
+-- Insert actors (1-2 per show)
+INSERT INTO actors (id, name) VALUES
+(31, 'Scott Whyte'),
+(32, 'Nolan North'),
+(33, 'Billy Bob Thornton'),
+(34, 'Martin Freeman'),
+(35, 'Wagner Moura'),
+(36, 'Pedro Pascal'),
+(37, 'Karl Urban'),
+(38, 'Jack Quaid'),
+(39, 'Bryan Cranston'),
+(40, 'Aaron Paul');
+
+-- Link shows to writers
+INSERT INTO shows_writers (id, show_id, writer_id) VALUES
+(22, 16, 22), -- Love, Death & Robots: Tim Miller
+
+(23, 17, 23), -- Fargo: Noah Hawley
+
+(24, 18, 24), -- Narcos: Chris Brancato
+
+(25, 19, 25), -- The Boys: Eric Kripke
+
+(26, 20, 26); -- Breaking Bad: Vince Gilligan
+
+-- Link shows to actors
+INSERT INTO shows_actors (id, show_id, actor_id) VALUES
+(31, 16, 31), -- Love, Death & Robots: Scott Whyte
+(32, 16, 32), -- Love, Death & Robots: Nolan North
+
+(33, 17, 33), -- Fargo: Billy Bob Thornton
+(34, 17, 34), -- Fargo: Martin Freeman
+
+(35, 18, 35), -- Narcos: Wagner Moura
+(36, 18, 36), -- Narcos: Pedro Pascal
+
+(37, 19, 37), -- The Boys: Karl Urban
+(38, 19, 38), -- The Boys: Jack Quaid
+
+(39, 20, 39), -- Breaking Bad: Bryan Cranston
+(40, 20, 40); -- Breaking Bad: Aaron Paul
+
+-- Link shows to genres (up to 2 per show)
+INSERT INTO shows_genres (id, show_id, genre_id) VALUES
+(31, 16, 5), -- Love, Death & Robots: Sci-Fi
+(32, 16, 7), -- Love, Death & Robots: Thriller
+
+(33, 17, 1), -- Fargo: Drama
+(34, 17, 2), -- Fargo: Crime
+
+(35, 18, 1), -- Narcos: Drama
+(36, 18, 2), -- Narcos: Crime
+
+(37, 19, 4), -- The Boys: Superhero
+(38, 19, 1), -- The Boys: Drama
+
+(39, 20, 1), -- Breaking Bad: Drama
+(40, 20, 2); -- Breaking Bad: Crime

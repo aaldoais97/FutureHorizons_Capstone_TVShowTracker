@@ -3,10 +3,12 @@ package com.cognixia.fh.bingeboard;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.cognixia.fh.bingeboard.connection.ConnectionManager;
 import com.cognixia.fh.bingeboard.dao.ProgressLists;
+import com.cognixia.fh.bingeboard.dao.Shows;
 import com.cognixia.fh.bingeboard.dao.Users;
 import com.cognixia.fh.bingeboard.userinterface.Login;
 import com.cognixia.fh.bingeboard.userinterface.MainInterface;
@@ -44,6 +46,8 @@ public class BingeBoardRunner
 
         // This code will not be reached if the connection fails, but just to be safe, check for null
         if (connection != null) {
+            ArrayList<Shows> showsList = Shows.allShows(connection); // Fetch all shows from the database
+            showsList.forEach(show -> System.out.println(show)); // Print the names of all shows for debugging purposes
             user = Login.startPage(inputScanner, connection, progressList); // Start the login process
         }
         

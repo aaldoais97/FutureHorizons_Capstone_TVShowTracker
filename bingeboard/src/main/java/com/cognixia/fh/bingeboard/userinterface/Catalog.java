@@ -1,13 +1,10 @@
 package com.cognixia.fh.bingeboard.userinterface;
 
-import java.lang.reflect.Array;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.logging.Filter;
+import java.util.stream.Collectors;
 
 import com.cognixia.fh.bingeboard.FilterOptions;
 import com.cognixia.fh.bingeboard.dao.Shows;
@@ -16,7 +13,13 @@ import com.cognixia.fh.bingeboard.dao.Shows;
 public class Catalog {
     ArrayList<Shows> catalog;
 
+    private Catalog() {
+        catalog = new ArrayList<>(); // Initialize the catalog
+    }
+
     static void displayMenu(Scanner inputScanner, Connection connection) {
+        Catalog catalogInstance = new Catalog(); // Create an instance of Catalog to access its methods
+
         int choice;
         // Flag to check if the catalog has been displayed, in order to change prompt message
         boolean catalogDisplayed = false; 
@@ -47,32 +50,32 @@ public class Catalog {
                 switch (choice) {
                     case 1:
                         System.out.println("Viewing all shows in the catalog...");
-                        viewCatalog(inputScanner, connection, FilterOptions.VIEW_ALL);
+                        catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.VIEW_ALL, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 2:
                         System.out.println("Filtering by Director...");
-                        viewCatalog(inputScanner, connection, FilterOptions.BY_DIRECTOR);
+                        catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_DIRECTOR, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 3:
                         System.out.println("Filtering by Writer...");
-                        viewCatalog(inputScanner, connection, FilterOptions.BY_WRITER);
+                        catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_WRITER, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 4:
                         System.out.println("Filtering by Actor...");
-                        viewCatalog(inputScanner, connection, FilterOptions.BY_ACTOR);
+                        catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_ACTOR, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 5:
                         System.out.println("Filtering by Genre...");
-                        viewCatalog(inputScanner, connection, FilterOptions.BY_GENRE);
+                        catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_GENRE, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 6:
                         System.out.println("Filtering by TV Network...");
-                        viewCatalog(inputScanner, connection, FilterOptions.BY_TV_NETWORK);
+                        catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_TV_NETWORK, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 7:
@@ -94,93 +97,105 @@ public class Catalog {
         }
     }
 
-    private void viewCatalog(Scanner inputScanner, Connection connection, FilterOptions filterOption) {        
+    private void viewCatalog(Scanner inputScanner, Connection connection, FilterOptions filterOption, ArrayList<Shows> catalogArr) {        
         switch(filterOption) {
             case VIEW_ALL:
-                catalog = loadCatalog(connection, FilterOptions.VIEW_ALL);
+                catalogArr = loadCatalog(connection, FilterOptions.VIEW_ALL, "");
                 break;
             case BY_DIRECTOR:
                 System.out.println("Please enter the director's name:");
                 String director = inputScanner.nextLine();
-                // Implement logic to filter catalog by director
+                catalogArr = loadCatalog(connection, FilterOptions.BY_DIRECTOR, director);
                 break;
             case BY_WRITER:
                 System.out.println("Please enter the writer's name:");
                 String writer = inputScanner.nextLine();
-                // Implement logic to filter catalog by writer
+                catalogArr = loadCatalog(connection, FilterOptions.BY_WRITER, writer);
                 break;
             case BY_ACTOR:
                 System.out.println("Please enter the actor's name:");
                 String actor = inputScanner.nextLine();
-                // Implement logic to filter catalog by actor
+                catalogArr = loadCatalog(connection, FilterOptions.BY_ACTOR, actor);
                 break;
             case BY_GENRE:
                 System.out.println("Please enter the genre:");
                 String genre = inputScanner.nextLine();
-                // Implement logic to filter catalog by genre
+                catalogArr = loadCatalog(connection, FilterOptions.BY_GENRE, genre);
                 break;
             case BY_TV_NETWORK:
                 System.out.println("Please enter the TV network:");
                 String tvNetwork = inputScanner.nextLine();
-                // Implement logic to filter catalog by TV network
+                catalogArr = loadCatalog(connection, FilterOptions.BY_TV_NETWORK, tvNetwork);
                 break;
             default:
                 System.out.println("Invalid filter option.");
         }
+
+        // Display the filtered catalog
+        if (!catalogArr.isEmpty()) {
+            for (Shows show : catalogArr) {
+                System.out.println(show.getName() + "\n\tDirector: " + show.getDirector() + 
+                                   " \n\tTV Network: " + show.getTvNetwork() + 
+                                   " \n\tGenres: " + String.join(", ", show.getGenres()) +
+                                   " \n\tWriters: " + String.join(", ", show.getWriters()) +
+                                   " \n\tActors: " + String.join(", ", show.getActors()) +
+                                   " \n\tEpisodes: " + show.getEpisodeCount());
+            }
+        } else {
+            System.out.println("No shows found for the selected filter.");
+        }
+
     }
 
     // filterOption is the type of filter to apply, and filterOption1 is the specific value for that filter (if applicable)
     // For example, if filterOption is BY_DIRECTOR, then filterOption1 would be the director's name
     private static ArrayList<Shows> loadCatalog(Connection connection, FilterOptions filterOption, String filterOption1) {
-        ArrayList<Shows> catalog = new ArrayList<>();
+        ArrayList<Shows> loadedCat = new ArrayList<>();
+        ArrayList<Shows> allShows = Shows.allShows(connection); // Default to loading all shows
 
-        PreparedStatement stmt = null;
+        switch (filterOption) {
+        case VIEW_ALL:
+            loadedCat = allShows; // If viewing all, just return all shows
+            break;
+        case BY_DIRECTOR:
+            loadedCat = allShows.stream()
+                .filter(show -> show.getDirector().equalsIgnoreCase(filterOption1))
+                .collect(Collectors.toCollection(ArrayList::new));
+            break;
+        case BY_WRITER:
+            ArrayList<String> writers = new ArrayList<>();
 
-        try {
-            switch (filterOption) {
-            case VIEW_ALL:
-                stmt = connection.prepareStatement("SELECT * FROM shows");
-                break;
-            case BY_DIRECTOR:
-                stmt = connection.prepareStatement("SELECT * FROM shows WHERE director = ?");
-                stmt.setString(1, filterOption1); // Set the director's name in the prepared statement
-                break;
-            case BY_WRITER:
-                stmt = connection.prepareStatement("SELECT * FROM shows WHERE writer = ?");
-                stmt.setString(1, filterOption1); // Set the writer's name in the prepared statement
-                break;
-            case BY_ACTOR:
-                stmt = connection.prepareStatement("SELECT * FROM shows WHERE actor = ?");
-                stmt.setString(1, filterOption1); // Set the actor's name in the prepared statement
-                break;
-            case BY_GENRE:
-                stmt = connection.prepareStatement("SELECT * FROM shows WHERE genre = ?");
-                stmt.setString(1, filterOption1); // Set the genre in the prepared statement
-                break;
-            case BY_TV_NETWORK:
-                stmt = connection.prepareStatement("SELECT * FROM shows WHERE tv_network = ?");
-                stmt.setString(1, filterOption1); // Set the TV network in the prepared statement
-                break;
-            default:
-                // This will never happen, but just in case, display all shows
-                stmt = connection.prepareStatement("SELECT * FROM shows");
-                break;
-            }
+            loadedCat = allShows.stream()
+                .filter(show -> show.getWriters().stream()
+                    .anyMatch(writer -> writer.equalsIgnoreCase(filterOption1)))
+                .collect(Collectors.toCollection(ArrayList::new));
+            break;
+        case BY_ACTOR:
+            ArrayList<String> actors = new ArrayList<>();
 
-            var resultSet = stmt.executeQuery();
+            loadedCat = allShows.stream()
+                .filter(show -> show.getActors().stream()
+                    .anyMatch(actor -> actor.equalsIgnoreCase(filterOption1)))
+                .collect(Collectors.toCollection(ArrayList::new));
+            break;
+        case BY_GENRE:
+            ArrayList<String> genres = new ArrayList<>();
 
-            
-        } catch (SQLException e) {
-            System.out.println("An SQL error occurred while loading the catalog: " + e.getMessage());
-            e.printStackTrace(); // Print the stack trace for debugging purposes
-            return catalog; // Return an empty catalog if there's an error
-        } catch (Exception e) {
-            System.out.println("An error occurred while loading the catalog: " + e.getMessage());
-            e.printStackTrace(); // Print the stack trace for debugging purposes
-            return catalog; // Return an empty catalog if there's an error
+            loadedCat = allShows.stream()
+                .filter(show -> show.getGenres().stream()
+                    .anyMatch(genre -> genre.equalsIgnoreCase(filterOption1)))
+                .collect(Collectors.toCollection(ArrayList::new));
+            break;
+        case BY_TV_NETWORK:
+            loadedCat = allShows.stream()
+                .filter(show -> show.getTvNetwork().equalsIgnoreCase(filterOption1))
+                .collect(Collectors.toCollection(ArrayList::new));
+            break;
+        default:
+            System.out.println("Invalid filter option.");
         }
 
-        return catalog;
+        return loadedCat;
     }
 
     private static void displayMenuOptions() {

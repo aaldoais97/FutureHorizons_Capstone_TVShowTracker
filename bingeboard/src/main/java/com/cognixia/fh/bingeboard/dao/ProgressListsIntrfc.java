@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public interface ProgressListsIntrfc {
-
-    
     public static ProgressLists createProgressList(Connection connection, int userId) {
         try {
             PreparedStatement createListStmt = connection.prepareStatement("INSERT INTO progress_lists (id) VALUES (?)");
