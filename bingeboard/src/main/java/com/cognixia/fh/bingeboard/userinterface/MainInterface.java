@@ -81,7 +81,7 @@ public class MainInterface {
     // Other methods for handling user input and navigating through the application can be added here.
     private static void viewWatchList(Scanner inputScanner, Connection connection, Users user, ProgressLists progressList) {
         // Display the user's watch list and corresponding menu
-        WatchList.displayMenu(inputScanner, connection);
+        WatchList.displayMenu(inputScanner, connection, progressList);
     }
 
     private static void updateWatchList(Scanner inputScanner, Connection connection, Users user, ProgressLists progressList) {

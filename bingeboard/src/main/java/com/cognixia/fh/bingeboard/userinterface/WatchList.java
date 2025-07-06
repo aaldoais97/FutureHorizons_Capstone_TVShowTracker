@@ -5,22 +5,18 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import com.cognixia.fh.bingeboard.FilterOptions;
+import com.cognixia.fh.bingeboard.dao.ProgressLists;
 
 // This method displays the user's watch list, in order by progress
 public class WatchList {
     // This will also call to display filtering options for the watch list
-    static void displayMenu(Scanner inputScanner, Connection connection) {
+    static void displayMenu(Scanner inputScanner, Connection connection, ProgressLists progressList) {
         // This method will display the user's watch list.
         int choice;
 
-        // Code to view the user's watch list
-        System.out.println("Viewing your watch list...");
-
-        // Implement logic to retrieve and display the watch list from the database
-
         System.out.println("Filter options:");
         System.out.println("===================================");
-        System.out.println("1. By Progress");
+        System.out.println("1. View All/By Progress");
         System.out.println("2. By Director");
         System.out.println("3. By Writer");
         System.out.println("4. By Actor");
@@ -39,27 +35,27 @@ public class WatchList {
                 switch (choice) {
                     case 1:
                         System.out.println("Filtering by Progress...");
-                        displayWatchList(inputScanner, connection, FilterOptions.BY_PROGRESS);
+                        displayWatchList(inputScanner, connection, FilterOptions.BY_PROGRESS, progressList);
                         break;
                     case 2:
                         System.out.println("Filtering by Director...");
-                        displayWatchList(inputScanner, connection, FilterOptions.BY_DIRECTOR);
+                        displayWatchList(inputScanner, connection, FilterOptions.BY_DIRECTOR, progressList);
                         break;
                     case 3:
                         System.out.println("Filtering by Writer...");
-                        displayWatchList(inputScanner, connection, FilterOptions.BY_WRITER);
+                        displayWatchList(inputScanner, connection, FilterOptions.BY_WRITER, progressList);
                         break;
                     case 4:
                         System.out.println("Filtering by Actor...");
-                        displayWatchList(inputScanner, connection, FilterOptions.BY_ACTOR);
+                        displayWatchList(inputScanner, connection, FilterOptions.BY_ACTOR, progressList);
                         break;
                     case 5:
                         System.out.println("Filtering by Genre...");
-                        displayWatchList(inputScanner, connection, FilterOptions.BY_GENRE);
+                        displayWatchList(inputScanner, connection, FilterOptions.BY_GENRE, progressList);
                         break;
                     case 6:
                         System.out.println("Filtering by TV Network...");
-                        displayWatchList(inputScanner, connection, FilterOptions.BY_TV_NETWORK);
+                        displayWatchList(inputScanner, connection, FilterOptions.BY_TV_NETWORK, progressList);
                         break;
                     case 7:
                         System.out.println("Returning to the main menu...");
@@ -81,34 +77,52 @@ public class WatchList {
     }
 
     // This method will view the user's watch list based on the selected filter option
-    static void displayWatchList(Scanner inputScanner, Connection connection, FilterOptions filterOption) {
+    static void displayWatchList(Scanner inputScanner, Connection connection, FilterOptions filterOption, ProgressLists progressList) {
         System.out.println("Viewing your watch list with filter: " + filterOption);
 
         // Prompt the user to enter the filter criteria
         switch (filterOption) {
             case BY_PROGRESS:
                 System.out.println("Please choose between the following options:");
-                System.out.println("1. In Progress");
-                System.out.println("2. Not Started");
-                System.out.println("3. Finished");
-                
+                System.out.println("1. View All");
+                System.out.println("2. In Progress");
+                System.out.println("3. Not Started");
+                System.out.println("4. Finished");
+
                 try {
                     int choice = inputScanner.nextInt();
                     inputScanner.nextLine(); // Consume any leftover newline character
                     switch (choice) {
                         case 1:
-                            // Show in progress shows
+                            // Show all shows
+                            System.out.println("Size: " + progressList.getProgressList().size());
+                            progressList.getProgressList().forEach(show -> System.out.println(show));
                             break;
                         case 2:
-                            // Show not started shows
+                            // Show in progress shows
+                            progressList.getProgressList().stream()
+                                    .filter(show -> show.getWatchedEpisodes() < show.getTotalEpisodes())
+                                    .forEach(show -> System.out.println(show));
                             break;
                         case 3:
+                            // Show not started shows
+                            progressList.getProgressList().stream()
+                                    .filter(show -> show.getWatchedEpisodes() == 0)
+                                    .forEach(show -> System.out.println(show));
+                            break;
+                        case 4:
                             // Show finished shows
+                            progressList.getProgressList().stream()
+                                    .filter(show -> show.getWatchedEpisodes() == show.getTotalEpisodes())
+                                    .forEach(show -> System.out.println(show));
                             break;
                         default:
                             System.out.println("Invalid option. Please select from the options above.");
                     }
                 } catch (Exception e) {
+                    System.out.println("An error occurred while filtering by progress: " + e.getMessage());
+                    e.printStackTrace(); // Print the stack trace for debugging purposes
+                    inputScanner.nextLine(); // Clear the scanner buffer
                 }
                 break;
             case BY_DIRECTOR:

@@ -13,7 +13,7 @@ public class Login {
     private static int userId;
     private static Users user;
 
-    public static void signinPage(Scanner inputScanner, Connection connection, ProgressLists progressList) {
+    public static void signinPage(Scanner inputScanner, Connection connection) {
         boolean validLogin = false;
         
         while (!validLogin) {
@@ -38,24 +38,26 @@ public class Login {
         }
 
         user = new Users(userId, username, password); // Create a new Users object with the provided username and password
-        progressList = new ProgressLists(userId, userId); // Create a new ProgressLists object with the user ID
-        System.out.println("\nLogin successful! Welcome, " + username + "!\n"); 
+
+
+        // Display success message if all setup is successful
+        System.out.println("\nLogin successful! Welcome, " + username + "!\n");
     }
 
-    public static void signupPage(Scanner inputScanner, Connection connection, ProgressLists progressList) {
+    public static void signupPage(Scanner inputScanner, Connection connection) {
         // Get username
         System.out.println("Please enter a username:");
         username = inputScanner.nextLine();
 
         if(username.isEmpty()) {
             System.out.println("Username cannot be empty. Please try again.\n");
-            signupPage(inputScanner, connection, progressList); // Retry sign-up if username is empty
+            signupPage(inputScanner, connection); // Retry sign-up if username is empty
         }
 
         // Check if username is already taken
         if (Users.usernameExists(connection, username)) {
             System.out.println("Username already exists " + username + ". Please try a different username.\n");
-            signupPage(inputScanner, connection, progressList); // Retry sign-up if username exists
+            signupPage(inputScanner, connection); // Retry sign-up if username exists
         }
 
         // Keep looping until a valid password is entered and confirmed
@@ -83,18 +85,17 @@ public class Login {
 
         // Insert new user and progress list into the database
         user = Users.insertNewUser(connection, username, password);
-        progressList = ProgressLists.createProgressList(connection, user.getId());
 
         if (user != null) {
             System.out.println("\nSign up successful! Welcome, " + username + "!\n");
         } else {
             System.out.println("Sign up failed. Please try again.\n");
-            signupPage(inputScanner, connection, progressList); // Retry sign-up if insertion fails
+            signupPage(inputScanner, connection); // Retry sign-up if insertion fails
         }
 
     }
 
-    public static Users startPage(Scanner inputScanner, Connection connection, ProgressLists progressList) {
+    public static Users startPage(Scanner inputScanner, Connection connection) {
         // Display start page message
         System.out.println("Welcome to the BingeBoard!");
         System.out.println("Your entertainment tracking hub for all things binge-worthy!\n");
@@ -109,10 +110,10 @@ public class Login {
 
                 switch (choice) {
                     case 1:
-                        signinPage(inputScanner, connection, progressList);
+                        signinPage(inputScanner, connection);
                         return user; // Exit the loop & function if sign-in is successful
                     case 2:
-                        signupPage(inputScanner, connection, progressList);
+                        signupPage(inputScanner, connection);
                         return user; // Exit the loop & function if sign-up is successful
                     default:
                         System.out.println("Invalid choice. Please try again.\n");
@@ -149,6 +150,6 @@ public class Login {
         System.out.println();
         System.out.println();
 
-        startPage(inputScanner, connection, progressList);   // Return to the sign-in page
+        startPage(inputScanner, connection);   // Return to the sign-in page
     }
 }

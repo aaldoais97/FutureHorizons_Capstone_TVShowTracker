@@ -6,38 +6,73 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.cognixia.fh.bingeboard.exceptions.ShowNotFoundException;
+
 public class ProgressLists implements ProgressListsIntrfc {
-    final class showProgress {
+    // Inner class to represent the progress of a single show
+    final public class showProgress {
         String showName;
         int totalEpisodes;
         int watchedEpisodes;
 
-        // to do: make this throw shownotfound exception as well as sql and other exceptions
-        public showProgress(Connection connection, String showName) {
+        public showProgress(Connection connection, String showName, int userId) throws SQLException, ShowNotFoundException {
             // Check if the showName exists in the database
+            int showId = 0; // Initialize showId to 0
             try {
                 PreparedStatement stmt = connection.prepareStatement("SELECT id FROM shows WHERE name = ?");
                 stmt.setString(1, showName);
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
-                    int showId = rs.getInt("id");
+                    showId = rs.getInt("id");
                     this.setTotalEpisodes(connection, showId); // Set total episodes from the database
                 } else {
-                    System.out.println("Show not found: " + showName);
-                    return; // Exit if the show is not found
+                    throw new ShowNotFoundException(showName);
                 }
             } catch (SQLException e) {
                 System.out.println("Error fetching show ID: " + e.getMessage());
-                e.printStackTrace();
-                return; // Exit if there's an error fetching the show ID
+                throw e; // Rethrow the SQLException
             } catch (Exception e) {
                 System.out.println("Unexpected error: " + e.getMessage());
-                e.printStackTrace();
-                return; // Exit if there's an unexpected error
+                throw e; // Rethrow the unexpected exception
             }
 
             this.showName = showName;
             this.watchedEpisodes = 0; // Default to 0 until set
+
+            try {
+                PreparedStatement watchedStmt = connection.prepareStatement("""
+                                                                    select episodes_completed
+                                                                    from shows_progress_lists
+                                                                    inner join progress_lists
+                                                                    \ton shows_progress_lists.progress_list_id = progress_lists.id
+                                                                    inner join shows
+                                                                    \ton shows_progress_lists.show_id = shows.id
+                                                                    where shows.id = ? and progress_lists.id = ?;""");
+                watchedStmt.setInt(1, showId);
+                watchedStmt.setInt(2, userId);
+                ResultSet rs = watchedStmt.executeQuery();
+                if (rs.next()) {
+                    this.watchedEpisodes = rs.getInt("episodes_completed");
+                }
+            } catch (SQLException e) {
+                System.out.println("Error fetching watched episodes: " + e.getMessage());
+                throw e;
+            } catch (Exception e) {
+                System.out.println("Unexpected error: " + e.getMessage());
+                throw e;
+            }
+        }
+
+        public String getShowName() {
+            return showName;
+        }
+
+        public int getTotalEpisodes() {
+            return totalEpisodes;
+        }
+
+        public int getWatchedEpisodes() {
+            return watchedEpisodes;
         }
 
         public void watchEpisodes(int episodesWatched) {
@@ -52,8 +87,7 @@ public class ProgressLists implements ProgressListsIntrfc {
             }
         }
 
-        // to do: make this throw sqlexception and other exceptions
-        public void setTotalEpisodes(Connection connection, int showId) {
+        public void setTotalEpisodes(Connection connection, int showId) throws SQLException, ShowNotFoundException {
             try {
                 PreparedStatement stmt = connection.prepareStatement("""
                                                                     select count(episodes.id)
@@ -67,25 +101,58 @@ public class ProgressLists implements ProgressListsIntrfc {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     this.totalEpisodes = rs.getInt(1);
+                } else {
+                    throw new ShowNotFoundException("Show with ID " + showId + " not found.");
                 }
             } catch (SQLException e) {
                 System.out.println("Error fetching episode count: " + e.getMessage());
-                e.printStackTrace();
+                throw e;
             } catch (Exception e) {
                 System.out.println("Unexpected error: " + e.getMessage());
-                e.printStackTrace();
+                throw e;
             }
+        }
+
+        @Override
+        public String toString() {
+            return "Show: " + showName + ", Total Episodes: " + totalEpisodes + ", Watched Episodes: " + watchedEpisodes;
         }
     }
 
-    int userId;
-    int progListId;
-    ArrayList<showProgress> progressList;
 
-    public ProgressLists(int userId, int progListId) {
+
+    private int userId;
+    private int progListId;
+    private ArrayList<showProgress> progressList;
+
+    public ProgressLists(Connection connection, int userId) throws SQLException, Exception {
         this.userId = userId;
-        this.progListId = progListId;
+        this.progListId = userId;
         this.progressList = new ArrayList<>();
+
+        // Initialize the progress list for the user
+        try {
+            PreparedStatement stmt = connection.prepareStatement("""
+                                                                    select shows.name
+                                                                    from shows
+                                                                    inner join shows_progress_lists
+                                                                    \ton shows.id = shows_progress_lists.show_id
+                                                                    inner join progress_lists
+                                                                    \ton shows_progress_lists.progress_list_id = progress_lists.id
+                                                                    where progress_lists.id = ?;""");
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String showName = rs.getString("name");
+                this.progressList.add(new showProgress(connection, showName, userId));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error initializing progress list: " + e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            System.out.println("Unexpected error: " + e.getMessage());
+            throw e;
+        }
     }
 
     public int getUserId() {
@@ -94,6 +161,10 @@ public class ProgressLists implements ProgressListsIntrfc {
 
     public int getProgListId() {
         return progListId;
+    }
+
+    public ArrayList<showProgress> getProgressList() {
+        return progressList;
     }
 
     public static ProgressLists createProgressList(Connection connection, int userId) {

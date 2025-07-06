@@ -47,11 +47,21 @@ public class BingeBoardRunner
         // This code will not be reached if the connection fails, but just to be safe, check for null
         if (connection != null) {
             ArrayList<Shows> showsList = Shows.allShows(connection); // Fetch all shows from the database
-            showsList.forEach(show -> System.out.println(show)); // Print the names of all shows for debugging purposes
-            user = Login.startPage(inputScanner, connection, progressList); // Start the login process
+            // Test display of showsList
+            //showsList.forEach(show -> System.out.println(show)); // Print the names of all shows for debugging purposes
+            user = Login.startPage(inputScanner, connection); // Start the login process
+            try {
+                progressList = new ProgressLists(connection, user.getId());
+            } catch (SQLException e) {
+                System.out.println("An error occurred while creating the progress list: " + e.getMessage());
+                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
         
-        if (user != null) {
+        if (user != null && progressList != null) {
             MainInterface.displayMainMenu(inputScanner, connection, user, progressList); // Display the main menu after successful login
         }
 

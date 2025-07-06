@@ -13,7 +13,7 @@ public interface ProgressListsIntrfc {
 
             if (rowsAffected > 0) {
                 // Progress list ID is the same as user ID since each user has a unique list
-                return new ProgressLists(userId, userId);
+                return new ProgressLists(connection, userId);
             }
         } catch (SQLException e) {
             System.out.println("An SQL error occurred while creating the progress list: " + e.getMessage());
