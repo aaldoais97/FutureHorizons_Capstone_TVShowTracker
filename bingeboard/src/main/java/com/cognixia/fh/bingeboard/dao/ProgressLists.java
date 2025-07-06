@@ -155,19 +155,28 @@ public class ProgressLists implements ProgressListsIntrfc {
         }
     }
 
+    @Override
     public int getUserId() {
         return userId;
     }
 
+    @Override
     public int getProgListId() {
         return progListId;
     }
 
+    @Override
     public ArrayList<showProgress> getProgressList() {
         return progressList;
     }
 
-    public static ProgressLists createProgressList(Connection connection, int userId) {
-        return ProgressListsIntrfc.createProgressList(connection, userId); // Pass null for connection as this is a placeholder
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Progress List for User ID: ").append(userId).append("\n");
+        for (showProgress show : progressList) {
+            sb.append(show.toString()).append("\n");
+        }
+        return sb.toString();
     }
 }
