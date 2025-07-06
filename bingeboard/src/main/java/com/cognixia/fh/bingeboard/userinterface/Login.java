@@ -99,10 +99,11 @@ public class Login {
         // Display start page message
         System.out.println("Welcome to the BingeBoard!");
         System.out.println("Your entertainment tracking hub for all things binge-worthy!\n");
+        System.out.println("Please choose an option to continue:");
         
         while (true) { 
             System.out.println("1. Sign In");
-            System.out.println("2. Sign Up");
+            System.out.println("2. Sign Up\n");
 
             try {
                 int choice = inputScanner.nextInt(); // Read user's choice
@@ -146,7 +147,7 @@ public class Login {
         clearCredentials(); // Clear the stored login credentials
 
         // Display sign-out message and 2 new lines for better readability
-        System.out.println("You have successfully signed out. Thank you for using BingeBoard!");
+        System.out.println("\nYou have successfully signed out. Thank you for using BingeBoard!");
         System.out.println();
         System.out.println();
 

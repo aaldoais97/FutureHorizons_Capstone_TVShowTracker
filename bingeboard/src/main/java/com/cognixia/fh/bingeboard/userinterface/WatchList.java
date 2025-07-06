@@ -13,7 +13,7 @@ public class WatchList {
         // This method will display the user's watch list.
         int choice;
 
-        System.out.println("Filter options:");
+        System.out.println("\nFilter options:");
         System.out.println("===================================");
         System.out.println("1. View All");
         System.out.println("2. In Progress");
@@ -62,13 +62,34 @@ public class WatchList {
     static void displayWatchList(Scanner inputScanner, Connection connection, int filterOption, ProgressLists progressList) {
         // This method will display the user's watch list based on the selected filter option
         System.out.println("\nYour watch list:");
-        System.out.println("===================================");
+        System.out.println("------------------------------------");
         
         try {
+            if (progressList.getProgressList().isEmpty()) {
+                System.out.println("Your watch list is empty.");
+                return; // Exit if the watch list is empty
+            }
+
             switch (filterOption) {
                 case 1:
                     // Show all shows
-                    progressList.getProgressList().forEach(show -> System.out.println(show.getShowName() + ": " + show.getEpisodesWatched() + "/" + show.getTotalEpisodes() + " episodes watched"));
+                    progressList.getProgressList().forEach(show -> {
+                    boolean complete = show.getEpisodesWatched() == show.getTotalEpisodes();
+                    boolean notStarted = show.getEpisodesWatched() == 0;
+
+                    // If not complete and not started, show the number of episodes watched
+                    // If complete, show "Completed"
+                    // If not started, show "Not started yet"
+                    String status;
+                    if (complete) {
+                        status = "Completed";
+                    } else if (notStarted) {
+                        status = "Not started yet";
+                    } else {
+                        status = show.getEpisodesWatched() + "/" + show.getTotalEpisodes() + " episodes watched";
+                    }
+                    System.out.println(show.getShowName() + ": " + status);
+                    });
                     break;
                 case 2:
                     // Show in progress shows
@@ -80,13 +101,13 @@ public class WatchList {
                     // Show not started shows
                     progressList.getProgressList().stream()
                             .filter(show -> show.getEpisodesWatched() == 0)
-                            .forEach(show -> System.out.println(show.getShowName() + ": " + show.getEpisodesWatched() + "/" + show.getTotalEpisodes() + " episodes watched"));
+                            .forEach(show -> System.out.println(show.getShowName() + ": Not started yet"));
                     break;
                 case 4:
                     // Show finished shows
                     progressList.getProgressList().stream()
                             .filter(show -> show.getEpisodesWatched() == show.getTotalEpisodes())
-                            .forEach(show -> System.out.println(show.getShowName() + ": " + show.getEpisodesWatched() + "/" + show.getTotalEpisodes() + " episodes watched"));
+                            .forEach(show -> System.out.println(show.getShowName() + ": Completed"));
                     break;
                 default:
                     System.out.println("Invalid option. Please select from the options above.");

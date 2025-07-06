@@ -21,9 +21,9 @@ public class ProgressLists implements ProgressListsIntrfc {
         public showProgress(Connection connection, String showName, int userId) throws SQLException, ShowNotFoundException {
             // Check if the showName exists in the database
             try {
-                PreparedStatement stmt = connection.prepareStatement("SELECT id FROM shows WHERE name = ?");
-                stmt.setString(1, showName);
-                ResultSet rs = stmt.executeQuery();
+                PreparedStatement showIdStmt = connection.prepareStatement("SELECT id FROM shows WHERE name = ?");
+                showIdStmt.setString(1, showName);
+                ResultSet rs = showIdStmt.executeQuery();
                 if (rs.next()) {
                     this.showId = rs.getInt("id");
                     this.setTotalEpisodes(connection, showId); // Set total episodes from the database
@@ -31,10 +31,10 @@ public class ProgressLists implements ProgressListsIntrfc {
                     throw new ShowNotFoundException(showName);
                 }
             } catch (SQLException e) {
-                System.out.println("Error fetching show ID: " + e.getMessage());
                 throw e; // Rethrow the SQLException
+            } catch (ShowNotFoundException e) {
+                throw e; // Rethrow the ShowNotFoundException
             } catch (Exception e) {
-                System.out.println("Unexpected error: " + e.getMessage());
                 throw e; // Rethrow the unexpected exception
             }
 

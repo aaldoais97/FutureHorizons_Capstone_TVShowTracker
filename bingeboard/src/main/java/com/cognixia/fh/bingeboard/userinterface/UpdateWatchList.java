@@ -21,7 +21,7 @@ public class UpdateWatchList {
         int episodesWatched; // Variable to store the number of episodes watched
 
         while(true) {
-            System.out.println("Please enter the name of the show (enter 'exit' to return to menu):");
+            System.out.println("\nPlease enter the name of the show (enter 'exit' to return to menu):");
 
             showName = inputScanner.nextLine();
 
@@ -33,6 +33,7 @@ public class UpdateWatchList {
                 System.out.println("How many episodes have you watched of " + showName + "?");
                 episodesWatched = inputScanner.nextInt(); // Read the number of episodes watched
                 inputScanner.nextLine(); // Consume any leftover newline character
+                System.out.println();   // Print a new line for better readability
 
                 if (episodesWatched < 0) {
                     System.out.println("Cannot watch a negative number of episodes. Please try again.");
@@ -42,17 +43,20 @@ public class UpdateWatchList {
                 progressList.updateProgressList(connection, showName, episodesWatched); // Update the watch list with the show name and episodes watched
                 System.out.println("Progress updated for show: " + showName);
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a valid number for episodes watched.");
+                System.out.println("\nInvalid input. Please enter a valid number for episodes watched.");
                 inputScanner.nextLine(); // Clear the invalid input
             } catch (ShowNotFoundException e) {
                 System.out.println("Show not found in your watch list: " + e.getMessage());
+                System.out.println();   // Print a new line for better readability
                 return; // Exit the method if the show is not found
             } catch (SQLException e) {
                 System.out.println("An error occurred while updating your watch list: " + e.getMessage());
+                System.out.println();   // Print a new line for better readability
                 e.printStackTrace(); // Print the stack trace for debugging purposes
                 return; // Exit the method if an SQL error occurs
             } catch (Exception e) {
-                System.out.println("An error occurred while viewing your watch list: " + e.getMessage());
+                System.out.println("An unexpected error occurred while updating your watch list: " + e.getMessage());
+                System.out.println();   // Print a new line for better readability
                 e.printStackTrace(); // Print the stack trace for debugging purposes
                 return; // Exit the method if an error occurs
             }

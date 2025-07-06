@@ -15,8 +15,6 @@ public class MainInterface {
         int choice; // Variable to store the user's menu choice
         boolean exit = false; // Flag to control the exit condition
 
-        System.out.println("Welcome to BingeBoard!");
-
         // Loop to handle user input and menu selection
         // This loop will continue until the user selects a valid option.
         while(!exit) {
@@ -101,14 +99,12 @@ public class MainInterface {
 
     private static void signOut(Scanner inputScanner, Connection connection, Users user, ProgressLists progressList) {
         // Code to sign out the user
-        System.out.println("Signing out...");
-
         Login.signOut(inputScanner, connection, progressList);
     }
 
     private static void exitBingeBoard(Users user, ProgressLists progressList) {
         // Print exit message
-        System.out.println("Exiting BingeBoard. Thank you for using our service!");
+        System.out.println("\nExiting BingeBoard. Thank you for using our service!");
 
         user = null; // Clear the user variable to allow garbage collection
         progressList = null; // Clear the progress list variable to allow garbage collection

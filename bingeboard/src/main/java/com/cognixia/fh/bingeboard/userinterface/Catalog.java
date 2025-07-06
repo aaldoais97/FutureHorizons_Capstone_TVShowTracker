@@ -24,15 +24,11 @@ public class Catalog {
         // Flag to check if the catalog has been displayed, in order to change prompt message
         boolean catalogDisplayed = false; 
 
-        System.out.println("Viewing the catalog of shows...");
-
-        // Implement logic to retrieve and display all shows from the database
-
         displayMenuOptions();
 
         while(true) {
             if (catalogDisplayed) {
-                System.out.println("Enter '7' to return to the main menu or any other key to display catalog menu:");
+                System.out.println("\nEnter '7' to return to the main menu or any other key to display catalog menu:");
                 String nextChoice = inputScanner.nextLine();
                 if (nextChoice.equals("7")) {
                     return; // Return to the main menu
@@ -42,44 +38,38 @@ public class Catalog {
             } else {
                 System.out.println("Please enter your choice:");
             }
-
+            
             try {
                 choice = inputScanner.nextInt(); // Read the user's choice for filtering
                 inputScanner.nextLine(); // Consume any leftover newline character
+                System.out.println();   // Print a new line for better readability
 
                 switch (choice) {
                     case 1:
-                        System.out.println("Viewing all shows in the catalog...");
                         catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.VIEW_ALL, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 2:
-                        System.out.println("Filtering by Director...");
                         catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_DIRECTOR, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 3:
-                        System.out.println("Filtering by Writer...");
                         catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_WRITER, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 4:
-                        System.out.println("Filtering by Actor...");
                         catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_ACTOR, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 5:
-                        System.out.println("Filtering by Genre...");
                         catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_GENRE, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 6:
-                        System.out.println("Filtering by TV Network...");
                         catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_TV_NETWORK, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 7:
-                        System.out.println("Returning to the main menu...");
                         return; // Return to the main menu
                     default:
                         System.out.println("Invalid option. Please select from the options above.");
@@ -100,31 +90,42 @@ public class Catalog {
     private void viewCatalog(Scanner inputScanner, Connection connection, FilterOptions filterOption, ArrayList<Shows> catalogArr) {        
         switch(filterOption) {
             case VIEW_ALL:
+                // Load the entire catalog
                 catalogArr = loadCatalog(connection, FilterOptions.VIEW_ALL, "");
                 break;
             case BY_DIRECTOR:
                 System.out.println("Please enter the director's name:");
                 String director = inputScanner.nextLine();
+                
+                // Load catalog based on director name
                 catalogArr = loadCatalog(connection, FilterOptions.BY_DIRECTOR, director);
                 break;
             case BY_WRITER:
                 System.out.println("Please enter the writer's name:");
                 String writer = inputScanner.nextLine();
+
+                // Load catalog based on writer name
                 catalogArr = loadCatalog(connection, FilterOptions.BY_WRITER, writer);
                 break;
             case BY_ACTOR:
                 System.out.println("Please enter the actor's name:");
                 String actor = inputScanner.nextLine();
+
+                // Load catalog based on actor name
                 catalogArr = loadCatalog(connection, FilterOptions.BY_ACTOR, actor);
                 break;
             case BY_GENRE:
                 System.out.println("Please enter the genre:");
                 String genre = inputScanner.nextLine();
+
+                // Load catalog based on genre
                 catalogArr = loadCatalog(connection, FilterOptions.BY_GENRE, genre);
                 break;
             case BY_TV_NETWORK:
                 System.out.println("Please enter the TV network:");
                 String tvNetwork = inputScanner.nextLine();
+
+                // Load catalog based on TV network
                 catalogArr = loadCatalog(connection, FilterOptions.BY_TV_NETWORK, tvNetwork);
                 break;
             default:
@@ -133,13 +134,19 @@ public class Catalog {
 
         // Display the filtered catalog
         if (!catalogArr.isEmpty()) {
+            System.out.println("\nFiltered catalog based on your selection:");
+            System.out.println("--------------------------------------------------");
+
+            // Iterate through the catalog and display each show's details
             for (Shows show : catalogArr) {
+                // Display the details of each show
                 System.out.println(show.getName() + "\n\tDirector: " + show.getDirector() + 
                                    " \n\tTV Network: " + show.getTvNetwork() + 
                                    " \n\tGenres: " + String.join(", ", show.getGenres()) +
                                    " \n\tWriters: " + String.join(", ", show.getWriters()) +
                                    " \n\tActors: " + String.join(", ", show.getActors()) +
-                                   " \n\tEpisodes: " + show.getEpisodeCount());
+                                   " \n\tTotal Episodes: " + show.getEpisodeCount());
+                System.out.println("--------------------------------------------------");
             }
         } else {
             System.out.println("No shows found for the selected filter.");
@@ -199,7 +206,7 @@ public class Catalog {
     }
 
     private static void displayMenuOptions() {
-        System.out.println("Menu options:");
+        System.out.println("\nMenu options:");
         System.out.println("===================================");
         System.out.println("1. View All");
         System.out.println("2. By Director");
