@@ -1,28 +1,32 @@
 package com.cognixia.fh.bingeboard.userinterface;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
-import com.cognixia.fh.bingeboard.exceptions.ShowNotFoundException;
+import com.cognixia.fh.bingeboard.dao.ProgressLists;
+import com.cognixia.fh.bingeboard.exceptions.ShowNotInProgListException;
 
 public class RemoveFromWatchList {
-    static void displayMenu(Scanner inputScanner, Connection connection) {
-        System.out.println("Enter the name of the show you want to remove from your watchlist:");
+    static void displayMenu(Scanner inputScanner, Connection connection, ProgressLists progressList) {
+        System.out.println("Enter the name of the show you want to remove from your watchlist (enter 'exit' to return to menu):");
         String showName = inputScanner.nextLine();
 
-        try {
-            // Placeholder
-            if (showName.isEmpty()) {
-                throw new ShowNotFoundException("No show name provided.");
-            }
-            boolean removed = false; // Replace with actual call to remove the show
-            if (removed) {
-                System.out.println(showName + " has been removed from your watchlist.");
-            } else {
-                System.out.println("Show not found in your watchlist.");
-            }
-        } catch (ShowNotFoundException e) {
-            System.out.println(e.getMessage());
+        if (showName.equalsIgnoreCase("exit")) {
+            return; // Exit the method if the user wants to return to the menu
         }
+
+        try {
+            progressList.removeFromProgressList(connection, showName);
+        } catch (ShowNotInProgListException e) {
+            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error removing show from progress list: " + e.getMessage());
+        }catch (Exception e) {
+            System.out.println("An unexpected error occurred: " + e.getMessage());
+            e.printStackTrace(); // Print the stack trace for debugging purposes
+        }
+
+        System.out.println("Successfully removed " + showName + " from your watchlist.");
     }
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public interface ProgressListsIntrfc {
     // Getters for ProgressLists attributes
     public int getUserId();
-    public int getProgListId();
     public ArrayList<ProgressLists.showProgress> getProgressList();
 
     @Override

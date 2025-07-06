@@ -49,7 +49,7 @@ public class MainInterface {
                         removeFromWatchList(inputScanner, connection, user, progressList);
                         break;
                     case 4:
-                        vewCatalog(inputScanner, connection);
+                        viewCatalog(inputScanner, connection);
                         break;
                     case 5:
                         signOut(inputScanner, connection, user, progressList);
@@ -86,23 +86,17 @@ public class MainInterface {
 
     private static void updateWatchList(Scanner inputScanner, Connection connection, Users user, ProgressLists progressList) {
         // Code to update the user's watch list
-        UpdateWatchList.displayMenu(inputScanner, connection);
-        // Implement logic to add or modify items in the watch list
-        
+        UpdateWatchList.displayMenu(inputScanner, connection, progressList);
     }
 
     private static void removeFromWatchList(Scanner inputScanner, Connection connection, Users user, ProgressLists progressList) {
         // Code to remove an item from the user's watch list
-        RemoveFromWatchList.displayMenu(inputScanner, connection);
-        // Implement logic to remove an item from the watch list
-        
+        RemoveFromWatchList.displayMenu(inputScanner, connection, progressList);        
     }
 
-    private static void vewCatalog(Scanner inputScanner, Connection connection) {
+    private static void viewCatalog(Scanner inputScanner, Connection connection) {
         // Code to view catalog of TV shows
-        Catalog.displayMenu(inputScanner, connection);
-        // Implement logic to search for content in the database
-        
+        Catalog.displayMenu(inputScanner, connection);        
     }
 
     private static void signOut(Scanner inputScanner, Connection connection, Users user, ProgressLists progressList) {

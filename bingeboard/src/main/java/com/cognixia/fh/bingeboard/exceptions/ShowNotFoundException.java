@@ -4,4 +4,8 @@ public class ShowNotFoundException extends Exception {
     public ShowNotFoundException(String showName) {
         super(showName + " not found.");
     }
+
+    public ShowNotFoundException(int showId) {
+        super("Show with ID " + showId + " not found.");
+    }
 }

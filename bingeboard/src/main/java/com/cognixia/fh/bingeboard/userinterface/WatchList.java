@@ -23,7 +23,7 @@ public class WatchList {
         System.out.println("===================================");
         
         while(true) {
-            System.out.println("\nPlease enter your choice:");
+            System.out.println("\nPlease enter your choice (enter 5 to return to main menu):");
 
             try {
                 choice = inputScanner.nextInt(); // Read the user's choice for filtering
@@ -68,25 +68,25 @@ public class WatchList {
             switch (filterOption) {
                 case 1:
                     // Show all shows
-                    progressList.getProgressList().forEach(show -> System.out.println(show.getShowName() + ": " + show.getWatchedEpisodes() + "/" + show.getTotalEpisodes() + " episodes watched"));
+                    progressList.getProgressList().forEach(show -> System.out.println(show.getShowName() + ": " + show.getEpisodesWatched() + "/" + show.getTotalEpisodes() + " episodes watched"));
                     break;
                 case 2:
                     // Show in progress shows
                     progressList.getProgressList().stream()
-                            .filter(show -> show.getWatchedEpisodes() < show.getTotalEpisodes())
-                            .forEach(show -> System.out.println(show.getShowName() + ": " + show.getWatchedEpisodes() + "/" + show.getTotalEpisodes() + " episodes watched"));
+                            .filter(show -> show.getEpisodesWatched() < show.getTotalEpisodes())
+                            .forEach(show -> System.out.println(show.getShowName() + ": " + show.getEpisodesWatched() + "/" + show.getTotalEpisodes() + " episodes watched"));
                     break;
                 case 3:
                     // Show not started shows
                     progressList.getProgressList().stream()
-                            .filter(show -> show.getWatchedEpisodes() == 0)
-                            .forEach(show -> System.out.println(show.getShowName() + ": " + show.getWatchedEpisodes() + "/" + show.getTotalEpisodes() + " episodes watched"));
+                            .filter(show -> show.getEpisodesWatched() == 0)
+                            .forEach(show -> System.out.println(show.getShowName() + ": " + show.getEpisodesWatched() + "/" + show.getTotalEpisodes() + " episodes watched"));
                     break;
                 case 4:
                     // Show finished shows
                     progressList.getProgressList().stream()
-                            .filter(show -> show.getWatchedEpisodes() == show.getTotalEpisodes())
-                            .forEach(show -> System.out.println(show.getShowName() + ": " + show.getWatchedEpisodes() + "/" + show.getTotalEpisodes() + " episodes watched"));
+                            .filter(show -> show.getEpisodesWatched() == show.getTotalEpisodes())
+                            .forEach(show -> System.out.println(show.getShowName() + ": " + show.getEpisodesWatched() + "/" + show.getTotalEpisodes() + " episodes watched"));
                     break;
                 default:
                     System.out.println("Invalid option. Please select from the options above.");
