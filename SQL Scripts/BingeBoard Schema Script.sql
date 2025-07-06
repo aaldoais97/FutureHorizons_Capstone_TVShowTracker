@@ -81,14 +81,6 @@ create table shows_progress_lists (
 	id int primary key,
     progress_list_id int,
 	show_id int,
-    
-    /*
-    While these values can be found through a series of join statements,
-    this makes necessary queries simpler while only utilizing the space
-    of 2 ints per show in a user's progress list, which is negligible
-    with respect to performance and storage.
-    */
-    seasons_completed int,
     episodes_completed int,
 
     foreign key(progress_list_id) references progress_lists(id),
