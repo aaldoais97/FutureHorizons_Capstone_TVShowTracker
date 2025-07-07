@@ -29,8 +29,16 @@ public class Login {
         // Keep looping until a valid login is provided
         while (!validLogin) {
             // Get username
-            System.out.println("Please enter your username:");
+            System.out.println("Please enter your username (enter 'exit' to cancel):");
             username = inputScanner.nextLine(); // No need for try-catch here
+
+            // Check if username is empty or "exit"
+            if (username.isEmpty()) {
+                continue; // Retry login if username is empty
+            } else if (username.equalsIgnoreCase("exit")) {
+                startPage(inputScanner, connection); // Return to start page if user wants to exit
+                return; // Exit the method to prevent further processing
+            }
 
             // Get password
             System.out.println("Please enter your password:");
@@ -74,12 +82,14 @@ public class Login {
      */
     public static void signupPage(Scanner inputScanner, Connection connection) {
         // Get username
-        System.out.println("Please enter a username:");
+        System.out.println("Please enter a username (enter 'exit' to cancel):");
         username = inputScanner.nextLine();
 
+        // Check if username is empty or "exit"
         if(username.isEmpty()) {
-            System.out.println("Username cannot be empty. Please try again.\n");
             signupPage(inputScanner, connection); // Retry sign-up if username is empty
+        } else if (username.equalsIgnoreCase("exit")) {
+            startPage(inputScanner, connection); // Return to start page if user wants to exit
         }
 
         // Check if username is already taken
@@ -87,6 +97,7 @@ public class Login {
             if (Users.usernameExists(connection, username)) {
                 System.out.println("Username already exists " + username + ". Please try a different username.\n");
                 signupPage(inputScanner, connection); // Retry sign-up if username exists
+                return; // Exit the method to prevent further processing
             }
         } catch (SQLException e) {
             System.out.println("An error occurred while checking username availability: " + e.getMessage());

@@ -22,21 +22,27 @@ public class ViewProgressList {
      */
     static void displayMenu(Scanner inputScanner, Connection connection, ProgressLists progressList) {
         int choice;
+        // Flag to track if the catalog has been displayed, in order to change prompt message
+        boolean progressListDisplayed = false;
+
 
         // Display the menu options to filter the watch list
-        System.out.println("\nFilter options:");
-        System.out.println("===================================");
-        System.out.println("1. View All");
-        System.out.println("2. In Progress");
-        System.out.println("3. Not Started");
-        System.out.println("4. Finished");
-        System.out.println("5. Return to Main Menu");
-        System.out.println("===================================");
-        
+        displayMenuOptions();
+
         // Loop to handle user input and menu selection
         // This loop will continue until the user chooses to return to the main menu
         while(true) {
-            System.out.println("\nPlease enter your choice (enter 5 to return to main menu):");
+            if (progressListDisplayed) {
+                System.out.println("\nEnter '5' to return to the main menu or any other key to display watch list menu:");
+                String nextChoice = inputScanner.nextLine();
+                if (nextChoice.equals("5")) {
+                    return; // Return to the main menu
+                } else {
+                    displayMenuOptions(); // Display the menu options again
+                }
+            } else {
+                System.out.println("\nPlease enter your choice:");
+            }
 
             // Prompt the user for their choice and handle input exceptions
             try {
@@ -47,18 +53,22 @@ public class ViewProgressList {
                     case 1:
                         // View all shows in the watch list
                         displayWatchList(inputScanner, connection, ProgressListFilterOptions.VIEW_ALL, progressList);
+                        progressListDisplayed = true; // Set flag to true if progress list is displayed
                         break;
                     case 2:
                         // View shows in progress
                         displayWatchList(inputScanner, connection, ProgressListFilterOptions.IN_PROGRESS, progressList);
+                        progressListDisplayed = true; // Set flag to true if progress list is displayed
                         break;
                     case 3:
                         // View shows not started
-                        displayWatchList(inputScanner, connection, ProgressListFilterOptions.VIEW_ALL, progressList);
+                        displayWatchList(inputScanner, connection, ProgressListFilterOptions.NOT_STARTED, progressList);
+                        progressListDisplayed = true; // Set flag to true if progress list is displayed
                         break;
                     case 4:
                         // View finished shows
                         displayWatchList(inputScanner, connection, ProgressListFilterOptions.COMPLETED, progressList);
+                        progressListDisplayed = true; // Set flag to true if progress list is displayed
                         break;
                     case 5:
                         return; // Return to the main menu;
@@ -146,5 +156,21 @@ public class ViewProgressList {
             e.printStackTrace(); // Print the stack trace for debugging purposes
             inputScanner.nextLine(); // Clear the scanner buffer
         }
+    }
+
+    /**
+     * This method displays the menu options for filtering the watch list.
+     * It can be used to display the options at the start or when needed.
+     */
+    private static void displayMenuOptions() {
+        // This method can be used to display the menu options for filtering the watch list
+        System.out.println("\nFilter options:");
+        System.out.println("===================================");
+        System.out.println("1. View All");
+        System.out.println("2. In Progress");
+        System.out.println("3. Not Started");
+        System.out.println("4. Finished");
+        System.out.println("5. Return to Main Menu");
+        System.out.println("===================================");
     }
 }

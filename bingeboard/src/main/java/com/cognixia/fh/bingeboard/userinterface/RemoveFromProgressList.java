@@ -22,7 +22,8 @@ public class RemoveFromProgressList {
      */
     static void displayMenu(Scanner inputScanner, Connection connection, ProgressLists progressList) {
         // Prompt the user for the name of the show they want to remove from their watch list
-        System.out.println("Enter the name of the show you want to remove from your watchlist (enter 'exit' to return to menu):");
+        System.out.println("Enter the name of the show you want to remove from your watchlist");
+        System.out.println("(enter 'exit' to return to menu):");
         String showName = inputScanner.nextLine();
 
         System.out.println(); // Print a new line for better readability

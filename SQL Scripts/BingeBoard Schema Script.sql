@@ -10,9 +10,7 @@ use bingeboard_db;
 create table users (
 	id int primary key auto_increment,
     username varchar(255) unique,
-	password varchar(255),
-	first_name varchar(255),
-	last_name varchar(255)
+	password varchar(255)
 );
 
 -- Each user must have one progress list and each list must have one user
