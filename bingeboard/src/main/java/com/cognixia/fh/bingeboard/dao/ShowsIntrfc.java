@@ -7,35 +7,38 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface ShowsIntrfc {
-    //Getters and Setters for Shows attributes - all fetched from db by id
     public int getId();
     public void setId(int id);
     public String getName();
-    public void setName(Connection connection, int showId);
+    public void setName(Connection connection, int showId) throws SQLException, Exception;
     public String getDirector();
-    public void setDirector(Connection connection, int showId);
+    public void setDirector(Connection connection, int showId) throws SQLException, Exception;
     public String getTvNetwork();
-    public void setTvNetwork(Connection connection, int showId);
+    public void setTvNetwork(Connection connection, int showId) throws SQLException, Exception;
     public ArrayList<String> getGenres();
-    public void setGenres(Connection connection, int showId);
+    public void setGenres(Connection connection, int showId) throws SQLException, Exception;
     public ArrayList<String> getWriters();
-    public void setWriters(Connection connection, int showId);
+    public void setWriters(Connection connection, int showId) throws SQLException, Exception;
     public ArrayList<String> getActors();
-    public void setActors(Connection connection, int showId);
+    public void setActors(Connection connection, int showId) throws SQLException, Exception;
     public int getEpisodeCount();
-    public void setEpisodeCount(Connection connection, int showId);
+    public void setEpisodeCount(Connection connection, int showId) throws SQLException, Exception;
 
     @Override
     public String toString();
 
-    public static ArrayList<Shows> allShows(Connection connection) {
+    /**
+     * Static method to fetch all shows from the database.
+     */
+    public static ArrayList<Shows> allShows(Connection connection) throws SQLException, Exception {
         ArrayList<Shows> showsList = new ArrayList<>();
-        PreparedStatement stmt = null;
+        PreparedStatement allShowsStmt = null;
 
+        // Fetch all shows from the database
         try {
-            stmt = connection.prepareStatement("SELECT * FROM shows");
+            allShowsStmt = connection.prepareStatement("SELECT * FROM shows");
 
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = allShowsStmt.executeQuery();
             while (rs.next()) {
                 Shows show = new Shows();
                 show.setId(rs.getInt("id"));
@@ -49,11 +52,9 @@ public interface ShowsIntrfc {
                 showsList.add(show);
             }
         } catch (SQLException e) {
-            System.out.println("Error preparing statement for all shows: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the exception to be handled by the caller
         } catch (Exception e) {
-            System.out.println("Unexpected error: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the unexpected exception
         }
 
             return showsList;

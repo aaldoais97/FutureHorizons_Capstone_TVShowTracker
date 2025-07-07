@@ -7,13 +7,23 @@ import java.util.Scanner;
 import com.cognixia.fh.bingeboard.ProgressListFilterOptions;
 import com.cognixia.fh.bingeboard.dao.ProgressLists;
 
-// This method displays the user's watch list, in order by progress
+/**
+ * This class provides a user interface for viewing the user's watch list.
+ * It allows users to filter their watch list based on different progress options.
+ */
 public class ViewProgressList {
-    // This will also call to display filtering options for the watch list
+    /**
+     * This method displays the menu for viewing the user's watch list.
+     * It prompts the user to select a filter option and displays the watch list accordingly.
+     *
+     * @param inputScanner Scanner object for reading user input
+     * @param connection Database connection object
+     * @param progressList ProgressLists object for managing watch lists
+     */
     static void displayMenu(Scanner inputScanner, Connection connection, ProgressLists progressList) {
-        // This method will display the user's watch list.
         int choice;
 
+        // Display the menu options to filter the watch list
         System.out.println("\nFilter options:");
         System.out.println("===================================");
         System.out.println("1. View All");
@@ -23,9 +33,12 @@ public class ViewProgressList {
         System.out.println("5. Return to Main Menu");
         System.out.println("===================================");
         
+        // Loop to handle user input and menu selection
+        // This loop will continue until the user chooses to return to the main menu
         while(true) {
             System.out.println("\nPlease enter your choice (enter 5 to return to main menu):");
 
+            // Prompt the user for their choice and handle input exceptions
             try {
                 choice = inputScanner.nextInt(); // Read the user's choice for filtering
                 inputScanner.nextLine(); // Consume any leftover newline character
@@ -65,12 +78,21 @@ public class ViewProgressList {
         }
     }
 
-    // This method will view the user's watch list based on the selected filter option
+    /**
+     * This method displays the user's watch list based on the selected filter option.
+     *
+     * @param inputScanner Scanner object for reading user input
+     * @param connection Database connection object
+     * @param filterOption The filter option selected by the user
+     * @param progressList ProgressLists object for managing watch lists
+     */
     static void displayWatchList(Scanner inputScanner, Connection connection, ProgressListFilterOptions filterOption, ProgressLists progressList) {
-        // This method will display the user's watch list based on the selected filter option
+        // Display watch list header
         System.out.println("\nYour watch list:");
         System.out.println("------------------------------------");
         
+        // Get the user's watch list and filter it based on the selected option
+        // If the watch list is empty, print a message and exit
         try {
             if (progressList.getProgressList().isEmpty()) {
                 System.out.println("Your watch list is empty.");

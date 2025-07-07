@@ -6,6 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/*
+ * Shows is a class that represents a TV show in the database.
+ * It contains attributes such as id, name, director, and network,
+ * as well as methods to access and modify these attributes.
+ */
 public class Shows implements ShowsIntrfc {
     int id;
     String name;
@@ -16,6 +21,7 @@ public class Shows implements ShowsIntrfc {
     ArrayList<String> actors;;
     int episodeCount;
 
+    // Default constructor initializes all attributes to default values
     public Shows() {
         this.id = 0;
         this.name = "";
@@ -41,21 +47,24 @@ public class Shows implements ShowsIntrfc {
         return name;
     }
 
+    /**
+     * Method to set the name of the show.
+     * It fetches the name from the database based on the show ID.
+     */
     @Override
-    public void setName(Connection connection, int id) {
+    public void setName(Connection connection, int id) throws SQLException, Exception {
+        // Fetch the name of the show from the database using the provided ID
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT name FROM shows WHERE id = ?");
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
+            PreparedStatement showNameStmt = connection.prepareStatement("SELECT name FROM shows WHERE id = ?");
+            showNameStmt.setInt(1, id);
+            ResultSet rs = showNameStmt.executeQuery();
             if (rs.next()) {
                 this.name = rs.getString("name");
             }
         } catch (SQLException e) {
-            System.out.println("Error fetching show name: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the exception to be handled by the caller
         } catch (Exception e) {
-            System.out.println("Unexpected error: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the unexpected exception
         }
     }
 
@@ -64,8 +73,12 @@ public class Shows implements ShowsIntrfc {
         return director;
     }
 
+    /**
+     * Method to set the director of the show.
+     * It fetches the director's name from the database based on the show ID.
+     */
     @Override
-    public void setDirector(Connection connection, int showId) {
+    public void setDirector(Connection connection, int showId) throws SQLException, Exception {
         try {
             PreparedStatement stmt = connection.prepareStatement("""
                                                                  select directors.name
@@ -79,11 +92,9 @@ public class Shows implements ShowsIntrfc {
                 this.director = rs.getString("name");
             }
         } catch (SQLException e) {
-            System.out.println("Error fetching show director: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the exception to be handled by the caller
         } catch (Exception e) {
-            System.out.println("Unexpected error: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the unexpected exception
         }
     }
 
@@ -92,8 +103,12 @@ public class Shows implements ShowsIntrfc {
         return tvNetwork;
     }
 
+    /**
+     * Method to set the TV network of the show.
+     * It fetches the network name from the database based on the show ID.
+     */
     @Override
-    public void setTvNetwork(Connection connection, int showId) {
+    public void setTvNetwork(Connection connection, int showId) throws SQLException, Exception {
         try {
             PreparedStatement stmt = connection.prepareStatement("""
                                                                  select networks.name
@@ -107,11 +122,9 @@ public class Shows implements ShowsIntrfc {
                 this.tvNetwork = rs.getString("name");
             }
         } catch (SQLException e) {
-            System.out.println("Error fetching show network: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the exception to be handled by the caller
         } catch (Exception e) {
-            System.out.println("Unexpected error: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the unexpected exception
         }
     }
 
@@ -120,8 +133,12 @@ public class Shows implements ShowsIntrfc {
         return genres;
     }
 
+    /**
+     * Method to set the genres of the show.
+     * It fetches the genres from the database based on the show ID.
+     */
     @Override
-    public void setGenres(Connection connection, int showId) {
+    public void setGenres(Connection connection, int showId) throws SQLException, Exception {
         try {
             PreparedStatement stmt = connection.prepareStatement("""
                                                                  select genres.name
@@ -138,11 +155,9 @@ public class Shows implements ShowsIntrfc {
                 this.genres.add(rs.getString("name"));
             }
         } catch (SQLException e) {
-            System.out.println("Error fetching show genres: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the exception to be handled by the caller
         } catch (Exception e) {
-            System.out.println("Unexpected error: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the unexpected exception
         }
     }
 
@@ -151,8 +166,12 @@ public class Shows implements ShowsIntrfc {
         return writers;
     }
 
+    /**
+     * Method to set the writers of the show.
+     * It fetches the writers from the database based on the show ID.
+     */
     @Override
-    public void setWriters(Connection connection, int showId) {
+    public void setWriters(Connection connection, int showId) throws SQLException, Exception {
         try {
             PreparedStatement stmt = connection.prepareStatement("""
                                                                  select writers.name
@@ -169,11 +188,9 @@ public class Shows implements ShowsIntrfc {
                 this.writers.add(rs.getString("name"));
             }
         } catch (SQLException e) {
-            System.out.println("Error fetching show writers: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the exception to be handled by the caller
         } catch (Exception e) {
-            System.out.println("Unexpected error: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the unexpected exception
         }
     }
 
@@ -182,8 +199,12 @@ public class Shows implements ShowsIntrfc {
         return actors;
     }
 
+    /**
+     * Method to set the actors of the show.
+     * It fetches the actors from the database based on the show ID.
+     */
     @Override
-    public void setActors(Connection connection, int showId) {
+    public void setActors(Connection connection, int showId) throws SQLException, Exception {
         try {
             PreparedStatement stmt = connection.prepareStatement("""
                                                                  select actors.name
@@ -200,11 +221,9 @@ public class Shows implements ShowsIntrfc {
                 this.actors.add(rs.getString("name"));
             }
         } catch (SQLException e) {
-            System.out.println("Error fetching show actors: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the exception to be handled by the caller
         } catch (Exception e) {
-            System.out.println("Unexpected error: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the unexpected exception
         }
     }
 
@@ -213,8 +232,12 @@ public class Shows implements ShowsIntrfc {
         return episodeCount;
     }
 
+    /**
+     * Method to set the episode count of the show.
+     * It fetches the count of episodes from the database based on the show ID.
+     */
     @Override
-    public void setEpisodeCount(Connection connection, int showId) {
+    public void setEpisodeCount(Connection connection, int showId) throws SQLException, Exception {
         try {
             PreparedStatement stmt = connection.prepareStatement("""
                                                                  select count(episodes.id)
@@ -230,15 +253,13 @@ public class Shows implements ShowsIntrfc {
                 this.episodeCount = rs.getInt(1);
             }
         } catch (SQLException e) {
-            System.out.println("Error fetching episode count: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the exception to be handled by the caller
         } catch (Exception e) {
-            System.out.println("Unexpected error: " + e.getMessage());
-            e.printStackTrace();
+            throw e;    // Rethrow the unexpected exception
         }
     }
 
-    public static ArrayList<Shows> allShows (Connection connection) {
+    public static ArrayList<Shows> allShows (Connection connection) throws SQLException, Exception {
         return ShowsIntrfc.allShows(connection);
     }
 

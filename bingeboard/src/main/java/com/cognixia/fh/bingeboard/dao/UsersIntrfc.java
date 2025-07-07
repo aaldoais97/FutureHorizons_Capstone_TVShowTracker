@@ -11,34 +11,36 @@ public interface UsersIntrfc {
     public String getUsername();
         
     public String getPassword();
-        
-    public String getFirstName();
-        
-    public String getLastName();
 
-    // This method should check if the username already exists in the database
-    public static boolean usernameExists(Connection connection, String username) {
+    /*
+     * This method checks if a username already exists in the database.
+     * It throws SQLException if there is an error executing the query,
+     * and throws Exception for any other unexpected errors.
+     */
+    public static boolean usernameExists(Connection connection, String username) throws SQLException, Exception {
+        // Check if the username already exists in the database
         try {
-            PreparedStatement checkUsernameStmt = connection.prepareStatement("SELECT COUNT(*) FROM users WHERE username = ?");
-            checkUsernameStmt.setString(1, username);
-            ResultSet rs = checkUsernameStmt.executeQuery();
+            PreparedStatement usernameExistsStmt = connection.prepareStatement("SELECT COUNT(*) FROM users WHERE username = ?");
+            usernameExistsStmt.setString(1, username);
+            ResultSet rs = usernameExistsStmt.executeQuery();
             if (rs.next() && rs.getInt(1) > 0) {
                 return true; // Username exists
             } else {
                 return false; // Username does not exist
             }
         } catch (SQLException e) {
-            System.out.println("An error occurred while checking the username: " + e.getMessage());
-            e.printStackTrace(); // Print the stack trace for debugging purposes
-            return true; // Return true in case of an error
+            throw e; // Rethrow the exception to be handled by the caller
         } catch (Exception e) {
-            System.out.println("An error occurred while checking the username: " + e.getMessage());
-            e.printStackTrace(); // Print the stack trace for debugging purposes
-            return true; // Return true in case of an error
+            throw e; // Rethrow the exception to be handled by the caller
         }
     }
 
-    public static int validateLogin(Connection connection, String username, String password) {
+    /* This method validates the login credentials of a user.
+       It checks if the provided username and password match any record in the database.
+       It throws SQLException if there is an error executing the query,
+       and throws Exception for any other unexpected errors.
+    */
+    public static int validateLogin(Connection connection, String username, String password) throws SQLException, Exception {
         try {
             PreparedStatement loginStmt = connection.prepareStatement("SELECT id FROM users WHERE username = ? AND password = ?");
             loginStmt.setString(1, username);
@@ -51,17 +53,19 @@ public interface UsersIntrfc {
                 return -1; // Return -1 if credentials are invalid
             }
         } catch (SQLException e) {
-            System.out.println("An error occurred while validating login: " + e.getMessage());
-            e.printStackTrace(); // Print the stack trace for debugging purposes
-            return -1; // Return -1 in case of an error
+            throw e; // Rethrow the exception to be handled by the caller
         } catch (Exception e) {
-            System.out.println("An error occurred while validating login: " + e.getMessage());
-            e.printStackTrace(); // Print the stack trace for debugging purposes
-            return -1; // Return -1 in case of an error
+            throw e; // Rethrow the exception to be handled by the caller
         }
     }
 
-    public static Users insertNewUser(Connection connection, String username, String password) {
+    /* This method inserts a new user into the database.
+       It takes a Connection object, username, and password as parameters.
+       It returns a Users object if the insertion is successful, or null if it fails.
+       It throws SQLException if there is an error executing the query,
+       and throws Exception for any other unexpected errors.
+    */
+    public static Users insertNewUser(Connection connection, String username, String password) throws SQLException, Exception {
         try {
             PreparedStatement insertUserStmt = connection.prepareStatement("INSERT INTO users (username, password) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             insertUserStmt.setString(1, username);
@@ -76,11 +80,9 @@ public interface UsersIntrfc {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("An error occurred while inserting the new user: " + e.getMessage());
-            e.printStackTrace(); // Print the stack trace for debugging purposes
+            throw e; // Rethrow the exception to be handled by the caller
         } catch (Exception e) {
-            System.out.println("An error occurred while inserting the new user: " + e.getMessage());
-            e.printStackTrace(); // Print the stack trace for debugging purposes
+            throw e; // Rethrow the exception to be handled by the caller
         }
         
         return null; // Return null if insertion fails

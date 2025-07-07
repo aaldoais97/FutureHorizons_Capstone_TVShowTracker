@@ -3,12 +3,10 @@ package com.cognixia.fh.bingeboard;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.cognixia.fh.bingeboard.connection.ConnectionManager;
 import com.cognixia.fh.bingeboard.dao.ProgressLists;
-import com.cognixia.fh.bingeboard.dao.Shows;
 import com.cognixia.fh.bingeboard.dao.Users;
 import com.cognixia.fh.bingeboard.userinterface.Login;
 import com.cognixia.fh.bingeboard.userinterface.MainInterface;
@@ -19,6 +17,10 @@ import com.cognixia.fh.bingeboard.userinterface.MainInterface;
  */
 public class BingeBoardRunner 
 {
+    /**
+     * The main method serves as the entry point for the BingeBoard application.
+     * It establishes a connection to the database, handles user login, and displays the main menu.
+     */
     public static void main( String[] args )
     {
         Scanner inputScanner = new Scanner(System.in);
@@ -46,9 +48,6 @@ public class BingeBoardRunner
 
         // This code will not be reached if the connection fails, but just to be safe, check for null
         if (connection != null) {
-            ArrayList<Shows> showsList = Shows.allShows(connection); // Fetch all shows from the database
-            // Test display of showsList
-            //showsList.forEach(show -> System.out.println(show)); // Print the names of all shows for debugging purposes
             user = Login.startPage(inputScanner, connection); // Start the login process
             try {
                 progressList = new ProgressLists(connection, user.getId());
@@ -61,6 +60,7 @@ public class BingeBoardRunner
             }
         }
         
+        // If user and progress list have been established, display the main menu
         if (user != null && progressList != null) {
             MainInterface.displayMainMenu(inputScanner, connection, user, progressList); // Display the main menu after successful login
         }
