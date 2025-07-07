@@ -13,7 +13,6 @@ This project is designed and implemented keeping in mind the requirements specif
 The database for BingeBoard includes 14 tables (see ER diagram within Documentation folder). These tables store data on show, user, and progress list information for BingeBoard app functionality. As stated in the scope section, there are only 20 shows entered into the database. User and progress list data for each user, is modified through the app. Show data is entered manually through SQL scripts as of now.
 
 ## App Structure
-## --------------------------------
 ### Architecture: Model, View, Controller (MVC)
 
 ### Base Project Files (No Project)
