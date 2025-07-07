@@ -13,7 +13,7 @@ import com.cognixia.fh.bingeboard.exceptions.ShowNotFoundException;
  * It prompts the user to enter the name of a show and the number of episodes watched.
  * If the show is not found, it throws a ShowNotFoundException.
  */
-public class UpdateWatchList {
+public class UpdateProgressList {
     // This method displays the menu for updating the watch list.
     // It prompts the user for the name of the show and the number of episodes watched.
     static void displayMenu(Scanner inputScanner, Connection connection, ProgressLists progressList) {

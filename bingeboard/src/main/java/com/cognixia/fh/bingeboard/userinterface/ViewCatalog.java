@@ -6,19 +6,19 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import com.cognixia.fh.bingeboard.FilterOptions;
+import com.cognixia.fh.bingeboard.ShowFilterOptions;
 import com.cognixia.fh.bingeboard.dao.Shows;
 
 // This method will display the menu for the user to filter shows.
-public class Catalog {
+public class ViewCatalog {
     ArrayList<Shows> catalog;
 
-    private Catalog() {
+    private ViewCatalog() {
         catalog = new ArrayList<>(); // Initialize the catalog
     }
 
     static void displayMenu(Scanner inputScanner, Connection connection) {
-        Catalog catalogInstance = new Catalog(); // Create an instance of Catalog to access its methods
+        ViewCatalog catalogInstance = new ViewCatalog(); // Create an instance of Catalog to access its methods
 
         int choice;
         // Flag to check if the catalog has been displayed, in order to change prompt message
@@ -46,27 +46,27 @@ public class Catalog {
 
                 switch (choice) {
                     case 1:
-                        catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.VIEW_ALL, catalogInstance.catalog);
+                        catalogInstance.viewCatalog(inputScanner, connection, ShowFilterOptions.VIEW_ALL, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 2:
-                        catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_DIRECTOR, catalogInstance.catalog);
+                        catalogInstance.viewCatalog(inputScanner, connection, ShowFilterOptions.BY_DIRECTOR, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 3:
-                        catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_WRITER, catalogInstance.catalog);
+                        catalogInstance.viewCatalog(inputScanner, connection, ShowFilterOptions.BY_WRITER, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 4:
-                        catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_ACTOR, catalogInstance.catalog);
+                        catalogInstance.viewCatalog(inputScanner, connection, ShowFilterOptions.BY_ACTOR, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 5:
-                        catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_GENRE, catalogInstance.catalog);
+                        catalogInstance.viewCatalog(inputScanner, connection, ShowFilterOptions.BY_GENRE, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 6:
-                        catalogInstance.viewCatalog(inputScanner, connection, FilterOptions.BY_TV_NETWORK, catalogInstance.catalog);
+                        catalogInstance.viewCatalog(inputScanner, connection, ShowFilterOptions.BY_TV_NETWORK, catalogInstance.catalog);
                         catalogDisplayed = true; // Set flag to true if catalog is displayed
                         break;
                     case 7:
@@ -87,46 +87,46 @@ public class Catalog {
         }
     }
 
-    private void viewCatalog(Scanner inputScanner, Connection connection, FilterOptions filterOption, ArrayList<Shows> catalogArr) {        
+    private void viewCatalog(Scanner inputScanner, Connection connection, ShowFilterOptions filterOption, ArrayList<Shows> catalogArr) {        
         switch(filterOption) {
             case VIEW_ALL:
                 // Load the entire catalog
-                catalogArr = loadCatalog(connection, FilterOptions.VIEW_ALL, "");
+                catalogArr = loadCatalog(connection, ShowFilterOptions.VIEW_ALL, "");
                 break;
             case BY_DIRECTOR:
                 System.out.println("Please enter the director's name:");
                 String director = inputScanner.nextLine();
                 
                 // Load catalog based on director name
-                catalogArr = loadCatalog(connection, FilterOptions.BY_DIRECTOR, director);
+                catalogArr = loadCatalog(connection, ShowFilterOptions.BY_DIRECTOR, director);
                 break;
             case BY_WRITER:
                 System.out.println("Please enter the writer's name:");
                 String writer = inputScanner.nextLine();
 
                 // Load catalog based on writer name
-                catalogArr = loadCatalog(connection, FilterOptions.BY_WRITER, writer);
+                catalogArr = loadCatalog(connection, ShowFilterOptions.BY_WRITER, writer);
                 break;
             case BY_ACTOR:
                 System.out.println("Please enter the actor's name:");
                 String actor = inputScanner.nextLine();
 
                 // Load catalog based on actor name
-                catalogArr = loadCatalog(connection, FilterOptions.BY_ACTOR, actor);
+                catalogArr = loadCatalog(connection, ShowFilterOptions.BY_ACTOR, actor);
                 break;
             case BY_GENRE:
                 System.out.println("Please enter the genre:");
                 String genre = inputScanner.nextLine();
 
                 // Load catalog based on genre
-                catalogArr = loadCatalog(connection, FilterOptions.BY_GENRE, genre);
+                catalogArr = loadCatalog(connection, ShowFilterOptions.BY_GENRE, genre);
                 break;
             case BY_TV_NETWORK:
                 System.out.println("Please enter the TV network:");
                 String tvNetwork = inputScanner.nextLine();
 
                 // Load catalog based on TV network
-                catalogArr = loadCatalog(connection, FilterOptions.BY_TV_NETWORK, tvNetwork);
+                catalogArr = loadCatalog(connection, ShowFilterOptions.BY_TV_NETWORK, tvNetwork);
                 break;
             default:
                 System.out.println("Invalid filter option.");
@@ -156,7 +156,7 @@ public class Catalog {
 
     // filterOption is the type of filter to apply, and filterOption1 is the specific value for that filter (if applicable)
     // For example, if filterOption is BY_DIRECTOR, then filterOption1 would be the director's name
-    private static ArrayList<Shows> loadCatalog(Connection connection, FilterOptions filterOption, String filterOption1) {
+    private static ArrayList<Shows> loadCatalog(Connection connection, ShowFilterOptions filterOption, String filterOption1) {
         ArrayList<Shows> loadedCat = new ArrayList<>();
         ArrayList<Shows> allShows = Shows.allShows(connection); // Default to loading all shows
 

@@ -79,22 +79,22 @@ public class MainInterface {
     // Other methods for handling user input and navigating through the application can be added here.
     private static void viewWatchList(Scanner inputScanner, Connection connection, Users user, ProgressLists progressList) {
         // Display the user's watch list and corresponding menu
-        WatchList.displayMenu(inputScanner, connection, progressList);
+        ViewProgressList.displayMenu(inputScanner, connection, progressList);
     }
 
     private static void updateWatchList(Scanner inputScanner, Connection connection, Users user, ProgressLists progressList) {
         // Code to update the user's watch list
-        UpdateWatchList.displayMenu(inputScanner, connection, progressList);
+        UpdateProgressList.displayMenu(inputScanner, connection, progressList);
     }
 
     private static void removeFromWatchList(Scanner inputScanner, Connection connection, Users user, ProgressLists progressList) {
         // Code to remove an item from the user's watch list
-        RemoveFromWatchList.displayMenu(inputScanner, connection, progressList);        
+        RemoveFromProgressList.displayMenu(inputScanner, connection, progressList);        
     }
 
     private static void viewCatalog(Scanner inputScanner, Connection connection) {
         // Code to view catalog of TV shows
-        Catalog.displayMenu(inputScanner, connection);        
+        ViewCatalog.displayMenu(inputScanner, connection);        
     }
 
     private static void signOut(Scanner inputScanner, Connection connection, Users user, ProgressLists progressList) {

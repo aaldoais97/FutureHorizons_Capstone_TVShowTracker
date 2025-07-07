@@ -4,10 +4,11 @@ import java.sql.Connection;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.cognixia.fh.bingeboard.ProgressListFilterOptions;
 import com.cognixia.fh.bingeboard.dao.ProgressLists;
 
 // This method displays the user's watch list, in order by progress
-public class WatchList {
+public class ViewProgressList {
     // This will also call to display filtering options for the watch list
     static void displayMenu(Scanner inputScanner, Connection connection, ProgressLists progressList) {
         // This method will display the user's watch list.
@@ -32,13 +33,19 @@ public class WatchList {
                 switch (choice) {
                     case 1:
                         // View all shows in the watch list
+                        displayWatchList(inputScanner, connection, ProgressListFilterOptions.VIEW_ALL, progressList);
+                        break;
                     case 2:
                         // View shows in progress
+                        displayWatchList(inputScanner, connection, ProgressListFilterOptions.IN_PROGRESS, progressList);
+                        break;
                     case 3:
                         // View shows not started
+                        displayWatchList(inputScanner, connection, ProgressListFilterOptions.VIEW_ALL, progressList);
+                        break;
                     case 4:
                         // View finished shows
-                        displayWatchList(inputScanner, connection, choice, progressList);
+                        displayWatchList(inputScanner, connection, ProgressListFilterOptions.COMPLETED, progressList);
                         break;
                     case 5:
                         return; // Return to the main menu;
@@ -59,7 +66,7 @@ public class WatchList {
     }
 
     // This method will view the user's watch list based on the selected filter option
-    static void displayWatchList(Scanner inputScanner, Connection connection, int filterOption, ProgressLists progressList) {
+    static void displayWatchList(Scanner inputScanner, Connection connection, ProgressListFilterOptions filterOption, ProgressLists progressList) {
         // This method will display the user's watch list based on the selected filter option
         System.out.println("\nYour watch list:");
         System.out.println("------------------------------------");
@@ -71,7 +78,7 @@ public class WatchList {
             }
 
             switch (filterOption) {
-                case 1:
+                case VIEW_ALL:
                     // Show all shows
                     progressList.getProgressList().forEach(show -> {
                     boolean complete = show.getEpisodesWatched() == show.getTotalEpisodes();
@@ -91,20 +98,20 @@ public class WatchList {
                     System.out.println(show.getShowName() + ": " + status);
                     });
                     break;
-                case 2:
+                case IN_PROGRESS:
                     // Show in progress shows
                     progressList.getProgressList().stream()
                             .filter(show -> show.getEpisodesWatched() < show.getTotalEpisodes())
                             .forEach(show -> System.out.println(show.getShowName() + ": " + show.getEpisodesWatched() + "/" + show.getTotalEpisodes() + " episodes watched"));
                     break;
-                case 3:
+                case NOT_STARTED:
                     // Show not started shows
                     progressList.getProgressList().stream()
                             .filter(show -> show.getEpisodesWatched() == 0)
                             .forEach(show -> System.out.println(show.getShowName() + ": Not started yet"));
                     break;
-                case 4:
-                    // Show finished shows
+                case COMPLETED:
+                    // Show completed shows
                     progressList.getProgressList().stream()
                             .filter(show -> show.getEpisodesWatched() == show.getTotalEpisodes())
                             .forEach(show -> System.out.println(show.getShowName() + ": Completed"));

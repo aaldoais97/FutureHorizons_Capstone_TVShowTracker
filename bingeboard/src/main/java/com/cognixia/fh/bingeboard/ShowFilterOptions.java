@@ -1,6 +1,6 @@
 package com.cognixia.fh.bingeboard;
 
-public enum FilterOptions {
+public enum ShowFilterOptions {
     BY_PROGRESS,
     VIEW_ALL,
     BY_DIRECTOR,

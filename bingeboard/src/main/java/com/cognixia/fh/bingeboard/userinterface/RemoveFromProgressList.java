@@ -7,7 +7,7 @@ import java.util.Scanner;
 import com.cognixia.fh.bingeboard.dao.ProgressLists;
 import com.cognixia.fh.bingeboard.exceptions.ShowNotInProgListException;
 
-public class RemoveFromWatchList {
+public class RemoveFromProgressList {
     static void displayMenu(Scanner inputScanner, Connection connection, ProgressLists progressList) {
         System.out.println("Enter the name of the show you want to remove from your watchlist (enter 'exit' to return to menu):");
         String showName = inputScanner.nextLine();
