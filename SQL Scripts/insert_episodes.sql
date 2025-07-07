@@ -1,5 +1,3 @@
--- This script will not run yet. Needs seasons table to be populated.
-
 -- First batch of 3 shows (first 3 seasons, first 10 episodes each)
 -- Better Call Saul
 INSERT INTO episodes (id, name, summary, season_id) VALUES
